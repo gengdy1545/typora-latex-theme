@@ -1,0 +1,285 @@
+$os: "" !default;
+$theme: "" !default;
+
+/* Mermaid 容器与响应式布局 */
+.md-diagram-panel {
+  display: block;
+  position: static;
+  clear: both;
+  max-width: 100%;
+  margin: 1.5em 0;
+  break-inside: avoid;
+}
+
+.md-diagram-panel > svg,
+.md-diagram-panel-preview svg {
+  display: block;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 auto;
+}
+
+.md-diagram-panel-preview {
+  display: block;
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 1em 1.2em;
+  overflow-x: auto;
+  text-align: center;
+  background-color: var(--diagram-preview-bg-color);
+  border: 1px solid var(--diagram-border-color);
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+@media screen {
+  .md-diagram-panel {
+    overflow-x: auto;
+  }
+
+  .md-diagram-panel > svg,
+  .md-diagram-panel-preview svg {
+    max-width: none;
+  }
+}
+
+/* Mermaid 文字 */
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is(svg text, svg tspan, .nodeLabel, .edgeLabel, .cluster-label, .label) {
+  color: var(--diagram-text-color);
+  fill: var(--diagram-text-color);
+  font-family: var(--mermaid-font-family), sans-serif;
+  stroke: none;
+  paint-order: normal;
+}
+
+/* 通用分组、参与者、任务与激活区域 */
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is(
+    .cluster rect,
+    .actor,
+    .labelBox,
+    .section,
+    .task,
+    .activation0,
+    .activation1,
+    .activation2
+  ) {
+  fill: var(--diagram-group-fill-color);
+  stroke: var(--diagram-group-border-color);
+  stroke-width: var(--diagram-line-width);
+}
+
+/* 流程图、类图与状态图节点 */
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is(
+    .node rect,
+    .node circle,
+    .node ellipse,
+    .node polygon,
+    .node .basic.label-container,
+    .classBox,
+    .stateGroup rect,
+    .stateGroup path,
+    .state-note rect
+  ) {
+  fill: var(--diagram-node-fill-color);
+  stroke: var(--diagram-node-border-color);
+  stroke-width: var(--diagram-line-width);
+}
+
+/* 注释与连线标签 */
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is(.note, .note rect, .edgeLabel rect, .labelBkg) {
+  fill: var(--diagram-note-fill-color);
+  stroke: var(--diagram-note-border-color);
+  stroke-width: var(--diagram-line-width);
+}
+
+/* 子图、区段和状态分组 */
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is(.cluster rect, .section, .stateGroup .label rect, .stateGroup .divider) {
+  fill: var(--diagram-group-fill-color);
+  stroke: var(--diagram-group-border-color);
+}
+
+/* 流程图、时序图和注释连线 */
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is(
+    .edgePath .path,
+    .flowchart-link,
+    .messageLine0,
+    .messageLine1,
+    .actor-line,
+    .loopLine,
+    .noteLine
+  ) {
+  fill: none;
+  stroke: var(--diagram-line-color);
+  stroke-width: var(--diagram-line-width);
+}
+
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is(.arrowheadPath, marker path, .marker path) {
+  fill: var(--diagram-line-color);
+  stroke: var(--diagram-line-color);
+}
+
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is(.grid .tick line, .grid path, .divider, .activationLine) {
+  stroke: var(--diagram-muted-line-color);
+  stroke-width: var(--diagram-line-width);
+}
+
+/* Sankey 连线：使用低饱和循环色，同时保留用户内联 style 的优先级 */
+:is(.md-diagram-panel, .md-diagram-panel-preview) .links .link {
+  fill: var(--diagram-accent-1);
+  stroke: var(--diagram-accent-1);
+  opacity: 0.72;
+  mix-blend-mode: var(--diagram-sankey-link-blend-mode);
+}
+
+:is(.md-diagram-panel, .md-diagram-panel-preview) .links .link:nth-of-type(5n + 2) {
+  fill: var(--diagram-accent-2);
+  stroke: var(--diagram-accent-2);
+}
+
+:is(.md-diagram-panel, .md-diagram-panel-preview) .links .link:nth-of-type(5n + 3) {
+  fill: var(--diagram-accent-3);
+  stroke: var(--diagram-accent-3);
+}
+
+:is(.md-diagram-panel, .md-diagram-panel-preview) .links .link:nth-of-type(5n + 4) {
+  fill: var(--diagram-accent-4);
+  stroke: var(--diagram-accent-4);
+}
+
+:is(.md-diagram-panel, .md-diagram-panel-preview) .links .link:nth-of-type(5n + 5) {
+  fill: var(--diagram-accent-5);
+  stroke: var(--diagram-accent-5);
+}
+
+/* Treemap、Packet 与 Kanban */
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is(
+    .treemapSection,
+    .treemapSectionHeader,
+    .treemapLeaf,
+    .packetBlock,
+    .packetByte,
+    .kanbanSection,
+    .kanbanItem
+  ) {
+  stroke: var(--diagram-node-border-color);
+  stroke-width: var(--diagram-line-width);
+}
+
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is(.treemapSection, .treemapSectionHeader, .packetBlock, .kanbanSection) {
+  fill: var(--diagram-accent-1-fill);
+}
+
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is(.treemapLeaf, .packetByte, .kanbanItem) {
+  fill: var(--diagram-accent-2-fill);
+}
+
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is(.treemapLeaf, .packetByte, .kanbanSection, .kanbanItem):nth-of-type(3n + 2) {
+  fill: var(--diagram-accent-3-fill);
+}
+
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is(.treemapLeaf, .packetByte, .kanbanSection, .kanbanItem):nth-of-type(3n) {
+  fill: var(--diagram-accent-5-fill);
+}
+
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is(
+    .treemapTitle,
+    .treemapLabel,
+    .treemapSectionLabel,
+    .treemapSectionValue,
+    .treemapValue,
+    .packetTitle,
+    .packetLabel,
+    .kanban-label,
+    .kanban-definition
+  ) {
+  color: var(--diagram-text-color);
+  fill: var(--diagram-text-color);
+  font-family: var(--mermaid-font-family), sans-serif;
+}
+
+/* XY Chart 的柱、线与数据点 */
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is([class*="bar-plot"] .bar, .bar) {
+  fill: var(--diagram-accent-1);
+  stroke: var(--diagram-accent-1);
+}
+
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is([class*="line-plot"] path, [class*="line-plot"] polyline, [class*="line-plot"] line) {
+  fill: none;
+  stroke: var(--diagram-accent-1);
+  stroke-width: var(--diagram-strong-line-width);
+}
+
+:is(.md-diagram-panel, .md-diagram-panel-preview)
+  :is([class*="point-plot"] circle, .plot .point) {
+  fill: var(--diagram-accent-3);
+  stroke: var(--diagram-accent-3);
+}
+
+/* Mermaid 编辑错误提示 */
+.md-diagram-panel-error:empty {
+  display: none;
+}
+
+.md-diagram-panel-error {
+  margin-top: 0.75em;
+  padding: 0.85em 1em 0.95em;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--diagram-error-text-color);
+  background-color: var(--diagram-error-bg-color);
+  border: 1px solid var(--diagram-error-border-color);
+  border-left-width: 3px;
+  border-radius: 2px;
+  font-family: var(--code-font), var(--ui-font), monospace;
+  font-size: 0.82em;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.md-diagram-panel-preview .error-icon,
+.md-diagram-panel-preview .error-text {
+  color: var(--diagram-error-text-color);
+  fill: var(--diagram-error-text-color);
+}
+
+/* A4/PDF：等比例缩入正文区域，不允许横向越界 */
+@media print {
+  .md-diagram-panel,
+  .md-diagram-panel-preview {
+    max-width: 100%;
+    padding: 0;
+    overflow: visible;
+    background: transparent;
+    border: none;
+    break-inside: avoid;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .md-diagram-panel > svg,
+  .md-diagram-panel-preview svg {
+    width: auto !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  .md-diagram-panel-error {
+    display: none !important;
+  }
+}

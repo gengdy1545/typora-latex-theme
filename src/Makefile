@@ -7,21 +7,24 @@ macos = macos
 linux = linux
 typora = typora
 pandoc = pandoc
+SASS ?= dart-sass
 
 $(shell mkdir -p $(working_dir))
+$(shell mkdir -p $(working_dir)/scss)
+$(shell mkdir -p $(working_dir)/headers)
 $(shell mkdir -p $(target_dir))
 
-$(shell cp -r $(base_dir)/scss $(working_dir)/scss)
-$(shell cp -r $(base_dir)/headers $(working_dir)/headers)
+$(shell cp -r $(base_dir)/scss/. $(working_dir)/scss)
+$(shell cp -r $(base_dir)/headers/. $(working_dir)/headers)
 
 # $(1) is the name of operating system, $(2) is typora or pandoc, $(3) is light or dark theme
 define build
 	mkdir -p $(target_dir)/$(1)-$(2)
 	mkdir -p $(target_dir)/$(1)-$(2)/target
 	if [ "$(3)" = "light" ]; then \
-		dart-sass --no-source-map --style expanded $(working_dir)/headers/$(1)/$(3).scss $(target_dir)/$(1)-$(2)/target/latex.css; \
+		"$(SASS)" --no-source-map --style expanded $(working_dir)/headers/$(1)/$(3).scss $(target_dir)/$(1)-$(2)/target/latex.css; \
 	else \
-		dart-sass --no-source-map --style expanded $(working_dir)/headers/$(1)/$(3).scss $(target_dir)/$(1)-$(2)/target/latex-$(3).css; \
+		"$(SASS)" --no-source-map --style expanded $(working_dir)/headers/$(1)/$(3).scss $(target_dir)/$(1)-$(2)/target/latex-$(3).css; \
 	fi
 endef
 

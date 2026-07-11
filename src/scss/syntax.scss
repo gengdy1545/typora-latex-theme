@@ -1,0 +1,137 @@
+$os: "" !default;
+$theme: "" !default;
+
+/* 代码块与 Typora 源码模式共用的基础配色 */
+.cm-s-inner,
+.cm-s-typora-default {
+  color: var(--code-text-color);
+  caret-color: var(--code-text-color);
+}
+
+.cm-s-inner div.CodeMirror-selected,
+.cm-s-typora-default div.CodeMirror-selected,
+.cm-s-inner.CodeMirror-focused div.CodeMirror-selected,
+.cm-s-typora-default.CodeMirror-focused div.CodeMirror-selected {
+  background-color: var(--code-selection-color);
+}
+
+.cm-s-inner .CodeMirror-line::selection,
+.cm-s-inner .CodeMirror-line > span::selection,
+.cm-s-inner .CodeMirror-line > span > span::selection,
+.cm-s-typora-default .CodeMirror-line::selection,
+.cm-s-typora-default .CodeMirror-line > span::selection,
+.cm-s-typora-default .CodeMirror-line > span > span::selection {
+  color: var(--code-text-color);
+  background-color: var(--code-selection-color);
+}
+
+.cm-s-inner .CodeMirror-cursor,
+.cm-s-typora-default .CodeMirror-cursor,
+pre.md-fences .CodeMirror-cursor,
+pre.md-meta-block .CodeMirror-cursor {
+  border-left: 1px solid var(--code-text-color) !important;
+}
+
+.cm-s-inner .CodeMirror-activeline-background,
+.cm-s-typora-default .CodeMirror-activeline-background {
+  background-color: transparent;
+}
+
+.cm-s-inner .CodeMirror-matchingbracket,
+.cm-s-typora-default .CodeMirror-matchingbracket {
+  color: var(--code-text-color) !important;
+  text-decoration: underline;
+}
+
+/* 程序代码 token */
+:is(pre.md-fences, pre.md-meta-block, .cm-s-inner, .cm-s-typora-default)
+  :is(.cm-keyword, .cm-builtin, .cm-qualifier) {
+  color: var(--syntax-keyword-color);
+  font-weight: 700;
+}
+
+:is(pre.md-fences, pre.md-meta-block, .cm-s-inner, .cm-s-typora-default)
+  :is(.cm-string, .cm-string-2) {
+  color: var(--syntax-string-color);
+}
+
+:is(pre.md-fences, pre.md-meta-block, .cm-s-inner, .cm-s-typora-default)
+  :is(.cm-number, .cm-atom) {
+  color: var(--syntax-number-color);
+}
+
+:is(pre.md-fences, pre.md-meta-block, .cm-s-inner, .cm-s-typora-default)
+  :is(.cm-variable-2, .cm-variable-3, .cm-type, .cm-def) {
+  color: var(--syntax-type-color);
+  font-weight: 600;
+}
+
+:is(pre.md-fences, pre.md-meta-block, .cm-s-inner, .cm-s-typora-default)
+  :is(.cm-comment) {
+  color: var(--syntax-comment-color);
+  font-style: italic;
+}
+
+:is(pre.md-fences, pre.md-meta-block, .cm-s-inner, .cm-s-typora-default)
+  :is(.cm-tag) {
+  color: var(--syntax-tag-color);
+}
+
+:is(pre.md-fences, pre.md-meta-block, .cm-s-inner, .cm-s-typora-default)
+  :is(.cm-attribute, .cm-property) {
+  color: var(--syntax-attribute-color);
+}
+
+:is(pre.md-fences, pre.md-meta-block, .cm-s-inner, .cm-s-typora-default)
+  :is(.cm-operator) {
+  color: var(--syntax-operator-color);
+}
+
+:is(pre.md-fences, pre.md-meta-block, .cm-s-inner, .cm-s-typora-default)
+  :is(.cm-meta, .cm-hr) {
+  color: var(--syntax-meta-color);
+}
+
+:is(pre.md-fences, pre.md-meta-block, .cm-s-inner, .cm-s-typora-default)
+  .cm-positive {
+  color: var(--syntax-diff-add-color);
+}
+
+:is(pre.md-fences, pre.md-meta-block, .cm-s-inner, .cm-s-typora-default)
+  .cm-negative {
+  color: var(--syntax-diff-remove-color);
+}
+
+:is(pre.md-fences, pre.md-meta-block, .cm-s-inner, .cm-s-typora-default)
+  .cm-error {
+  color: var(--syntax-error-color);
+  background-color: transparent;
+}
+
+/* 未分类变量保持正文色，避免高亮过度 */
+:is(pre.md-fences, pre.md-meta-block, .cm-s-inner, .cm-s-typora-default)
+  .cm-variable {
+  color: var(--code-text-color);
+}
+
+/* 源码模式中的 Markdown token */
+:is(.cm-s-inner, .cm-s-typora-default) .cm-header {
+  color: var(--code-text-color);
+  font-weight: var(--strong-weight);
+}
+
+:is(.cm-s-inner, .cm-s-typora-default)
+  :is(.cm-formatting, .cm-formatting-code, .cm-formatting-list, .cm-formatting-header) {
+  color: var(--code-muted-color);
+}
+
+:is(.cm-s-inner, .cm-s-typora-default) :is(.cm-link, .cm-url) {
+  color: var(--link-color-light);
+  text-decoration: none;
+}
+
+@if $theme == "dark" {
+  :is(.cm-s-inner, .cm-s-typora-default) :is(.cm-link, .cm-url) {
+    color: var(--link-color-dark);
+  }
+}

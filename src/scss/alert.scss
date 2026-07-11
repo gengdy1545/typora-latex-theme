@@ -1,0 +1,101 @@
+$os: "" !default;
+$theme: "" !default;
+
+/* GitHub/Typora 风格的 Alert 提示块 */
+blockquote.md-alert,
+blockquote:has(.md-alert-text-container) {
+  padding: 1em 1.2em 1em 1.35em;
+  border-left-width: 3px;
+  border-radius: 0 4px 4px 0;
+  font-family: var(--base-latin-font), var(--base-chinese-font), serif;
+  font-size: 1em;
+  font-style: normal;
+  color: inherit;
+}
+
+blockquote.md-alert :is(p, ul, ol),
+blockquote:has(.md-alert-text-container) :is(p, ul, ol) {
+  color: inherit;
+}
+
+blockquote.md-alert
+  :is(
+    .md-alert-text-note,
+    .md-alert-text-tip,
+    .md-alert-text-important,
+    .md-alert-text-warning,
+    .md-alert-text-caution
+  ),
+blockquote:has(.md-alert-text-container)
+  :is(
+    .md-alert-text-note,
+    .md-alert-text-tip,
+    .md-alert-text-important,
+    .md-alert-text-warning,
+    .md-alert-text-caution
+  ) {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  margin-bottom: 0.45em;
+}
+
+blockquote.md-alert .md-alert-text-container,
+blockquote:has(.md-alert-text-container) .md-alert-text-container {
+  font-family: var(--ui-font), sans-serif;
+  font-size: 0.82em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+blockquote.md-alert
+  :is(
+    .md-alert-text-note,
+    .md-alert-text-tip,
+    .md-alert-text-important,
+    .md-alert-text-warning,
+    .md-alert-text-caution
+  )
+  :is(svg, path),
+blockquote:has(.md-alert-text-container)
+  :is(
+    .md-alert-text-note,
+    .md-alert-text-tip,
+    .md-alert-text-important,
+    .md-alert-text-warning,
+    .md-alert-text-caution
+  )
+  :is(svg, path) {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+@mixin alert-variant($name) {
+  blockquote.md-alert-#{$name},
+  blockquote:has(.md-alert-text-#{$name}) {
+    background-color: var(--alert-#{$name}-bg-color);
+    border-left-color: var(--alert-#{$name}-accent);
+  }
+
+  blockquote.md-alert-#{$name}
+    :is(.md-alert-text-#{$name}, .md-alert-text-container),
+  blockquote:has(.md-alert-text-#{$name})
+    :is(.md-alert-text-#{$name}, .md-alert-text-container) {
+    color: var(--alert-#{$name}-accent);
+  }
+}
+
+@include alert-variant("note");
+@include alert-variant("tip");
+@include alert-variant("important");
+@include alert-variant("warning");
+@include alert-variant("caution");
+
+@media print {
+  blockquote.md-alert,
+  blockquote:has(.md-alert-text-container) {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

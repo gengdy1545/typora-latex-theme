@@ -50,18 +50,32 @@ body {
     margin-bottom: 1em;
   }
   p {
-    text-align: left;
+    text-align: justify;
     line-height: var(--base-line-height);
   }
 
   // 超链接
+  a,
+  a:hover,
+  a:focus {
+    text-decoration: none;
+  }
+
   @if $theme == "light" {
     a {
       color: var(--link-color-light);
     }
+    a:hover,
+    a:focus {
+      color: var(--link-hover-color-light);
+    }
   } @else if $theme == "dark" {
     a {
       color: var(--link-color-dark);
+    }
+    a:hover,
+    a:focus {
+      color: var(--link-hover-color-dark);
     }
   }
 }

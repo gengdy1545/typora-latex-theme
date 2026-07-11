@@ -7,37 +7,132 @@ code {
 }
 h1 code, h2 code, h3 code, h4 code, h5 code, h6 code,
 p code,
-li code {
-  @if $theme == "light" {
-    color: rgb(60, 112, 198);
-    background-color: #fefefe;
-    /* 阴影 */
-    box-shadow: 0 0 1px 1px #c8d3df;
-  } @else if $theme == "dark" {
-    /* 黑色模式修改 */
-    color: #8bb1f9;
-    /* 黑色模式修改 */
-    background-color: #161616;
-    /* 黑色模式修改 */
-    box-shadow: 0 0 1px 1px #141414;
-  }
+li code,
+th code,
+td code {
+  color: inherit;
+  background-color: transparent;
+  box-shadow: none;
   font-family: var(--code-font), var(--ui-font), monospace;
+  font-size: 0.95em;
   box-sizing: border-box;
-  border-right: 0px;
-  margin: 0 2px 0 2px;
-  padding: 0 2px 0 2px;
-  /* 圆角 */
-  border-radius: 2px 2px 2px 2px;
+  border: none;
+  margin: 0;
+  padding: 0 0.08em;
+  border-radius: 0;
 }
 
 /* 代码块样式 */
-.md-fences,
-.CodeMirror pre,
-.CodeMirror-wrap {
-  /* padding: 10px; */ // FIXME 当代码太长跨页的时候好像也会有点问题
-  font-size: 1em;
+pre.md-fences,
+pre.md-meta-block {
+  position: relative;
+  box-sizing: border-box;
+  margin: 1.2em 0;
+  padding: 0.8em 0.6em;
+  overflow: hidden;
+  color: var(--code-text-color);
+  background-color: var(--code-block-bg-color);
+  border: 0;
+  border-top: 1.5px solid var(--code-block-border-color);
+  border-bottom: 1.5px solid var(--code-block-border-color);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--code-font), var(--ui-font), monospace;
+  font-size: var(--code-block-font-size);
+  line-height: var(--code-block-line-height);
+  text-align: left;
+  hyphens: none;
+  tab-size: 4;
 }
+
+pre.md-fences code {
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: none;
+}
+
+pre.md-fences
+  :is(.CodeMirror, .CodeMirror-wrap, .CodeMirror-scroll, .CodeMirror-sizer, .CodeMirror-gutters, .cm-s-inner) {
+  color: var(--code-text-color);
+  background-color: transparent;
+}
+
+pre.md-fences .CodeMirror-gutters {
+  border: none;
+}
+
+pre.md-fences .CodeMirror-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+pre.md-fences.ty-contain-cm.md-focus .md-fences-adv-panel {
+  position: absolute;
+  top: 0.2em;
+  right: 0.35em;
+  bottom: auto;
+  left: auto;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+pre.md-fences.ty-contain-cm .md-fences-adv-panel .ty-cm-lang-input,
+pre.md-fences.ty-contain-cm .md-fences-adv-panel .md-lang {
+  display: inline-block;
+  min-width: 7em;
+  max-width: calc(100% - 2em);
+  padding: 0.1em 0.35em;
+  color: var(--code-muted-color);
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  font-family: var(--code-font), var(--ui-font), monospace;
+  font-size: 0.85em;
+  text-align: right;
+  opacity: 0.75;
+}
+
 .CodeMirror-code pre,
 .CodeMirror-sizer {
   font-family: var(--code-font), var(--ui-font), monospace;
+}
+
+@media print {
+  pre.md-fences,
+  pre.md-meta-block {
+    --code-block-bg-color: transparent;
+    --code-block-border-color: #000000;
+    --code-text-color: #111111;
+    --code-muted-color: #505860;
+    --syntax-keyword-color: #003a9b;
+    --syntax-string-color: #067d17;
+    --syntax-number-color: #7a3e9d;
+    --syntax-type-color: #6f2da8;
+    --syntax-comment-color: #505860;
+    --syntax-tag-color: #004f9e;
+    --syntax-attribute-color: #8a3b12;
+    --syntax-operator-color: #171717;
+    --syntax-meta-color: #5a2d82;
+    --syntax-diff-add-color: #087524;
+    --syntax-diff-remove-color: #b21f2d;
+    --syntax-error-color: #b00020;
+    overflow: visible;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  pre.md-fences .md-fences-adv-panel,
+  pre.md-fences .ty-cm-lang-input,
+  pre.md-fences .md-lang,
+  pre.md-fences .code-tooltip {
+    display: none !important;
+  }
+
+  pre.md-fences .CodeMirror-scroll {
+    overflow: visible !important;
+  }
 }

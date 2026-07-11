@@ -41,6 +41,8 @@ $theme: "" !default;
   --base-latin-font: "Latin Modern Roman", "Latin Modern Roman 10", Times;
   --base-chinese-font: #{meta.inspect($chinese-serif-font)};
   --base-font-size: 9.5pt;
+  /* 仅用于 Typora 屏幕预览；打印仍使用 base-font-size */
+  --preview-base-font-size: 11.5pt;
 
   /* 引言字体 */
   --quote-latin-font: "Latin Modern Roman", "Latin Modern Roman 10", Times, "Times New Roman";
@@ -55,6 +57,8 @@ $theme: "" !default;
   /* "Courier New" 从 Windows 3.1 起成为 Windows 官方提供的字体 */
   /* "Consolas" 从 Windows Vista 起成为 Windows 官方提供的字体 */
   --code-font: "Latin Modern Mono", "Latin Modern Mono 10", "Consolas", "Courier New";
+  --code-block-font-size: 0.92em;
+  --code-block-line-height: 1.4;
 
   /* 侧边栏字体 */
   --ui-font: #{meta.inspect($ui-font)};
@@ -131,6 +135,73 @@ $theme: "" !default;
   /* 超链接颜色 */
   --link-color-light: #2E67D3;
   --link-color-dark: #8bb1f9;
+  --link-hover-color-light: #1f4fa8;
+  --link-hover-color-dark: #b4ccfa;
+
+  /* 代码块与语法高亮 */
+  --code-block-bg-color: transparent;
+  --code-block-border-color: #1a1a1a;
+  --code-text-color: #171717;
+  --code-muted-color: #565d65;
+  --code-selection-color: rgba(0, 74, 173, 0.18);
+  --syntax-keyword-color: #003a9b;
+  --syntax-string-color: #067d17;
+  --syntax-number-color: #7a3e9d;
+  --syntax-type-color: #6f2da8;
+  --syntax-comment-color: #5d646c;
+  --syntax-tag-color: #004f9e;
+  --syntax-attribute-color: #8a3b12;
+  --syntax-operator-color: #202020;
+  --syntax-meta-color: #5a2d82;
+  --syntax-diff-add-color: #087524;
+  --syntax-diff-remove-color: #b21f2d;
+  --syntax-error-color: #b00020;
+
+  /* Alert 提示块 */
+  --alert-note-accent: #2c5a85;
+  --alert-note-bg-color: rgba(24, 58, 99, 0.06);
+  --alert-tip-accent: #3b5f35;
+  --alert-tip-bg-color: rgba(85, 102, 47, 0.08);
+  --alert-important-accent: #5d4773;
+  --alert-important-bg-color: rgba(100, 68, 122, 0.08);
+  --alert-warning-accent: #875720;
+  --alert-warning-bg-color: rgba(135, 87, 32, 0.09);
+  --alert-caution-accent: #8c1c1c;
+  --alert-caution-bg-color: rgba(140, 28, 28, 0.08);
+
+  /* Mermaid 图表 */
+  --mermaid-theme: neutral;
+  --mermaid-font-family: var(--ui-font);
+  --mermaid-sequence-numbers: off;
+  --mermaid-flowchart-curve: linear;
+  --sequence-theme: simple;
+  --diagram-preview-bg-color: rgba(0, 0, 0, 0.015);
+  --diagram-border-color: rgba(0, 0, 0, 0.16);
+  --diagram-text-color: #303030;
+  --diagram-node-fill-color: rgba(80, 96, 112, 0.07);
+  --diagram-node-border-color: #5b6672;
+  --diagram-group-fill-color: rgba(70, 70, 66, 0.04);
+  --diagram-group-border-color: #777773;
+  --diagram-note-fill-color: rgba(140, 103, 49, 0.10);
+  --diagram-note-border-color: #8c6731;
+  --diagram-line-color: #545454;
+  --diagram-muted-line-color: #909090;
+  --diagram-accent-1: #526b87;
+  --diagram-accent-2: #647466;
+  --diagram-accent-3: #756982;
+  --diagram-accent-4: #58727a;
+  --diagram-accent-5: #8a7048;
+  --diagram-accent-1-fill: rgba(82, 107, 135, 0.10);
+  --diagram-accent-2-fill: rgba(100, 116, 102, 0.09);
+  --diagram-accent-3-fill: rgba(117, 105, 130, 0.08);
+  --diagram-accent-4-fill: rgba(88, 114, 122, 0.09);
+  --diagram-accent-5-fill: rgba(138, 112, 72, 0.11);
+  --diagram-error-bg-color: rgba(140, 28, 28, 0.06);
+  --diagram-error-border-color: rgba(140, 28, 28, 0.35);
+  --diagram-error-text-color: #8c1c1c;
+  --diagram-line-width: 1.2px;
+  --diagram-strong-line-width: 1.5px;
+  --diagram-sankey-link-blend-mode: multiply;
 
   /* == 二级标题强制分页 == */
   /* 默认值为 auto */
@@ -156,5 +227,58 @@ $theme: "" !default;
     --select-text-font-color: #161616;
     --bg-color: #1e1e1e;
     --mermaid-theme: night;
+    --code-block-bg-color: transparent;
+    --code-block-border-color: #d8d8d8;
+    --code-text-color: #eeeeee;
+    --code-muted-color: #a7b0ba;
+    --code-selection-color: rgba(122, 162, 255, 0.28);
+    --syntax-keyword-color: #7aa2ff;
+    --syntax-string-color: #7fd88a;
+    --syntax-number-color: #d0a4ff;
+    --syntax-type-color: #c792ea;
+    --syntax-comment-color: #a7b0ba;
+    --syntax-tag-color: #74c7ec;
+    --syntax-attribute-color: #f2b36f;
+    --syntax-operator-color: #f0f0f0;
+    --syntax-meta-color: #d1a6ff;
+    --syntax-diff-add-color: #72db8c;
+    --syntax-diff-remove-color: #ff7b86;
+    --syntax-error-color: #ff667d;
+    --diagram-preview-bg-color: rgba(255, 255, 255, 0.025);
+    --diagram-border-color: rgba(255, 255, 255, 0.18);
+    --diagram-text-color: #dcdcdc;
+    --diagram-node-fill-color: rgba(139, 177, 249, 0.10);
+    --diagram-node-border-color: #91a5bd;
+    --diagram-group-fill-color: rgba(255, 255, 255, 0.035);
+    --diagram-group-border-color: #898989;
+    --diagram-note-fill-color: rgba(223, 180, 111, 0.10);
+    --diagram-note-border-color: #c59c5d;
+    --diagram-line-color: #b8b8b8;
+    --diagram-muted-line-color: #777777;
+    --diagram-accent-1: #8faed0;
+    --diagram-accent-2: #9ab59c;
+    --diagram-accent-3: #b4a2c4;
+    --diagram-accent-4: #91afb6;
+    --diagram-accent-5: #c3a878;
+    --diagram-accent-1-fill: rgba(143, 174, 208, 0.12);
+    --diagram-accent-2-fill: rgba(154, 181, 156, 0.11);
+    --diagram-accent-3-fill: rgba(180, 162, 196, 0.11);
+    --diagram-accent-4-fill: rgba(145, 175, 182, 0.11);
+    --diagram-accent-5-fill: rgba(195, 168, 120, 0.12);
+    --diagram-error-bg-color: rgba(238, 139, 139, 0.10);
+    --diagram-error-border-color: rgba(238, 139, 139, 0.45);
+    --diagram-error-text-color: #ee9a9a;
+    --diagram-sankey-link-blend-mode: screen;
+
+    --alert-note-accent: #8bb1f9;
+    --alert-note-bg-color: rgba(139, 177, 249, 0.10);
+    --alert-tip-accent: #9acb91;
+    --alert-tip-bg-color: rgba(154, 203, 145, 0.10);
+    --alert-important-accent: #c6a4e2;
+    --alert-important-bg-color: rgba(198, 164, 226, 0.10);
+    --alert-warning-accent: #dfb46f;
+    --alert-warning-bg-color: rgba(223, 180, 111, 0.10);
+    --alert-caution-accent: #ee8b8b;
+    --alert-caution-bg-color: rgba(238, 139, 139, 0.10);
   }
 }

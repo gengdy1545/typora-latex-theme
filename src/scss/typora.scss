@@ -3,6 +3,9 @@ $theme: "" !default;
 
 @media screen {
   #write {
+    /* 编辑预览随窗口展开；打印时仍使用 text.scss 中的 A4 宽度 */
+    max-width: none;
+    font-size: var(--preview-base-font-size);
     padding: var(--set-margin);
     @if $theme == "light" {
       /* 添加一个淡蓝色的边框 */
