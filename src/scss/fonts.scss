@@ -1,0 +1,236 @@
+$os: "" !default;
+$theme: "" !default;
+
+@mixin alibaba-face($weight, $name, $postscript-name, $file) {
+  @font-face {
+    font-family: "TLT Alibaba PuHuiTi";
+    src:
+      local($name),
+      local($postscript-name),
+      url("./latex_fonts/windows/#{$file}") format("truetype");
+    font-style: normal;
+    font-weight: $weight;
+    font-display: swap;
+  }
+}
+
+/*
+ * 主题字体不会安装到操作系统。
+ * Chromium 会先尝试 local()，仅在系统中找不到对应字形时读取
+ * 与主题 CSS 同级的 latex_fonts 目录。
+ */
+@font-face {
+  font-family: "TLT Latin Modern Roman";
+  src:
+    local("Latin Modern Roman 10 Regular"),
+    local("LMRoman10-Regular"),
+    url("./latex_fonts/latin-modern/lmroman10-regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT Latin Modern Roman";
+  src:
+    local("Latin Modern Roman 10 Italic"),
+    local("LMRoman10-Italic"),
+    url("./latex_fonts/latin-modern/lmroman10-italic.otf") format("opentype");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT Latin Modern Roman";
+  src:
+    local("Latin Modern Roman 10 Bold"),
+    local("LMRoman10-Bold"),
+    url("./latex_fonts/latin-modern/lmroman10-bold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT Latin Modern Roman";
+  src:
+    local("Latin Modern Roman 10 Bold Italic"),
+    local("LMRoman10-BoldItalic"),
+    url("./latex_fonts/latin-modern/lmroman10-bolditalic.otf") format("opentype");
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* macOS 标题原本以常规字重调用粗体 PostScript 字体，保留这一行为。 */
+@font-face {
+  font-family: "TLT Latin Modern Heading";
+  src:
+    local("Latin Modern Roman 10 Bold"),
+    local("LMRoman10-Bold"),
+    url("./latex_fonts/latin-modern/lmroman10-bold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT Latin Modern Mono";
+  src:
+    local("Latin Modern Mono 10 Regular"),
+    local("LMMono10-Regular"),
+    url("./latex_fonts/latin-modern/lmmono10-regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Latin Modern 官方将 Mono Light Bold 作为 lmtt 家族的粗体字形。 */
+@font-face {
+  font-family: "TLT Latin Modern Mono";
+  src:
+    local("Latin Modern Mono Light 10 Bold"),
+    local("LMMonoLt10-Bold"),
+    url("./latex_fonts/latin-modern/lmmonolt10-bold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* 三个平台共同使用的中文正文、楷体和仿宋字形。 */
+@font-face {
+  font-family: "TLT Family Song";
+  src:
+    local("Family Song"),
+    local("FmlSong"),
+    local("FmlSong-Regular"),
+    url("./latex_fonts/family-song/FmlSong-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT Family Song";
+  src:
+    local("Family Song Italic"),
+    local("FmlSong-Italic"),
+    url("./latex_fonts/family-song/FmlSong-Italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT Family Song";
+  src:
+    local("Family Song Black"),
+    local("FmlSong-Black"),
+    url("./latex_fonts/family-song/FmlSong-Black.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT Family Song";
+  src:
+    local("Family Song Black Italic"),
+    local("FmlSong-BlackItalic"),
+    url("./latex_fonts/family-song/FmlSong-BlackItalic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT FZDoc Kai";
+  src:
+    local("FZDocKai"),
+    local("FZDKT--GBK1-0"),
+    url("./latex_fonts/fzdoc/FZKT_Document.TTF") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT FZDoc FangSong";
+  src:
+    local("FZDocFangSong"),
+    local("FZDFS--GBK1-0"),
+    url("./latex_fonts/fzdoc/FZFS_Document.TTF") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@if $os == "macos" {
+  /* 保持原 macOS 主题以常规字重调用粗体标题字形的行为。 */
+  @font-face {
+    font-family: "TLT STHeiti Bold";
+    src:
+      local("STHeitiBold"),
+      local("华文黑体Bold"),
+      url("./latex_fonts/macos/STHeitiBold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
+}
+
+@if $os == "windows" {
+  @include alibaba-face(400, "Alibaba PuHuiTi 2 55 Regular", "AlibabaPuHuiTi_2_55_Regular", "AlibabaPuHuiTi-2-55-Regular.ttf");
+  @include alibaba-face(600, "Alibaba PuHuiTi 2 75 SemiBold", "AlibabaPuHuiTi_2_75_SemiBold", "AlibabaPuHuiTi-2-75-SemiBold.ttf");
+  @include alibaba-face(700, "Alibaba PuHuiTi 2 85 Bold", "AlibabaPuHuiTi_2_85_Bold", "AlibabaPuHuiTi-2-85-Bold.ttf");
+  @include alibaba-face(900, "Alibaba PuHuiTi 2 105 Heavy", "AlibabaPuHuiTi_2_105_Heavy", "AlibabaPuHuiTi-2-105-Heavy.ttf");
+}
+
+/*
+ * 可再分发的简体中文回退。各平台原有字体仍位于字体栈前方，
+ * 只有系统缺少这些字体时才会使用内置 Noto。
+ */
+@font-face {
+  font-family: "TLT Noto Sans SC";
+  src:
+    local("Noto Sans SC"),
+    local("Noto Sans CJK SC"),
+    url("./latex_fonts/noto-cjk-sc/NotoSansSC-VF.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT Noto Serif SC";
+  src:
+    local("Noto Serif SC"),
+    local("Noto Serif CJK SC"),
+    url("./latex_fonts/noto-cjk-sc/NotoSerifSC-VF.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT Latin Modern Mono";
+  src:
+    local("Latin Modern Mono 10 Italic"),
+    local("LMMono10-Italic"),
+    url("./latex_fonts/latin-modern/lmmono10-italic.otf") format("opentype");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT Latin Modern Mono";
+  src:
+    local("Latin Modern Mono Light 10 Bold Oblique"),
+    local("LMMonoLt10-BoldOblique"),
+    url("./latex_fonts/latin-modern/lmmonolt10-boldoblique.otf") format("opentype");
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+}

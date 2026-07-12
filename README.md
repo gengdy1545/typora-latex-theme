@@ -99,7 +99,8 @@ $$
 
 3. 解压缩这个文件，进入解压缩后的文件夹。按照[在线安装教程](https://github.com/Keldos-Li/typora-latex-theme/wiki/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B)或该文件夹下 `README.md` 中的安装教程**完成剩余的安装步骤**。请务必确认您完成了下面的步骤：
      - [进行手动或自动主题安装](https://github.com/Keldos-Li/typora-latex-theme/wiki/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B#%E5%BC%80%E5%A7%8B%E5%AE%89%E8%A3%85)
-     - [下载并安装所需的字体](https://github.com/Keldos-Li/typora-latex-theme/wiki/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B#%E5%AE%89%E8%A3%85%E5%AD%97%E4%BD%93)
+
+发布包已经包含目标平台主题所需的完整字体。自动安装脚本会把字体保存在 Typora 主题目录中；它们不会注册到操作系统，也不需要用户逐个安装。手动安装时，请同时复制 `target` 中的两个 CSS 文件和 `latex_fonts` 文件夹。字体许可证及尚需核验的授权说明位于安装包根目录的 `font-licenses`；对外再分发前请先阅读。
 
 
 

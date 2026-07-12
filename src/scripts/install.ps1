@@ -21,6 +21,7 @@ function Convert-BytesToString {
 }
 
 $dir="$env:APPDATA\Typora\themes"
+$targetDir = Join-Path $PSScriptRoot "target"
 
 Write-Output (
     Convert-BytesToString -ByteArray `
@@ -49,7 +50,33 @@ If (Test-Path -Path $dir -PathType Container) {
 }
 
 Try {
-    Copy-Item -Path ".\target\*.css" -Destination $dir -Recurse -Force -ErrorAction Stop
+    Copy-Item -Path (Join-Path $targetDir "*.css") -Destination $dir -Force -ErrorAction Stop
+
+    $fontSource = Join-Path $targetDir "latex_fonts"
+    If (-Not (Test-Path -LiteralPath $fontSource -PathType Container)) {
+        Throw "The installation package is missing target/latex_fonts."
+    }
+
+    $fontDestination = Join-Path $dir "latex_fonts"
+    New-Item -Path $fontDestination -ItemType Directory -Force -ErrorAction Stop | Out-Null
+
+    $managedFontDirectories = @(
+        "latin-modern",
+        "noto-cjk-sc",
+        "family-song",
+        "fzdoc",
+        "macos",
+        "windows"
+    )
+    ForEach ($managedDirectory in $managedFontDirectories) {
+        $managedPath = Join-Path $fontDestination $managedDirectory
+        If (Test-Path -LiteralPath $managedPath) {
+            Remove-Item -LiteralPath $managedPath -Recurse -Force -ErrorAction Stop
+        }
+    }
+
+    Get-ChildItem -LiteralPath $fontSource -Force -ErrorAction Stop |
+        Copy-Item -Destination $fontDestination -Recurse -Force -ErrorAction Stop
 } Catch {
     $MessageBody = $_.Exception.Message
     $ButtonType = [System.Windows.MessageBoxButton]::OK
@@ -57,7 +84,7 @@ Try {
     $MessageTitle = (
         Convert-BytesToString -ByteArray `
         @(0xe5, 0xae, 0x89, 0xe8, 0xa3, 0x85, 0xe5, 0xa4, 0xb1, 0xe8, 0xb4, 0xa5)
-    ) # an zhuang shi bai  
+    ) # an zhuang shi bai
     Write-Error $MessageTitle
     [System.Windows.MessageBox]::Show($MessageBody, $MessageTitle, $ButtonType, $MessageIcon)
     Throw $MessageBody
@@ -66,12 +93,12 @@ Try {
 $MessageBody = (
     Convert-BytesToString -ByteArray `
     @(0xe4, 0xb8, 0xbb, 0xe9, 0xa2, 0x98, 0xe6, 0x96, 0x87, 0xe4, 0xbb, 0xb6, 0xe5, 0xb7, 0xb2, 0xe5, 0xae, 0x89, 0xe8, 0xa3, 0x85, 0xe6, 0x88, 0x90, 0xe5, 0x8a, 0x9f)
-) # zhu ti wen jian yi an zhuang cheng gong  
+) # zhu ti wen jian yi an zhuang cheng gong
 $ButtonType = [System.Windows.MessageBoxButton]::OK
 $MessageIcon = [System.Windows.MessageBoxImage]::Information
 $MessageTitle = (
     Convert-BytesToString -ByteArray `
     @(0xe5, 0xae, 0x89, 0xe8, 0xa3, 0x85, 0xe6, 0x88, 0x90, 0xe5, 0x8a, 0x9f)
-) # an zhuang cheng gong   
+) # an zhuang cheng gong
 Write-Output $MessageTitle
 [System.Windows.MessageBox]::Show($MessageBody, $MessageTitle, $ButtonType, $MessageIcon)

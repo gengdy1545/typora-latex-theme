@@ -1,0 +1,4 @@
+[submodule "resources/fonts"]
+	path = resources/fonts
+	url = https://github.com/gengdy1545/typora-latex-theme-fonts.git
+	shallow = true

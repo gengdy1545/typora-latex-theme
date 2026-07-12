@@ -8,6 +8,9 @@ linux = linux
 typora = typora
 pandoc = pandoc
 SASS ?= dart-sass
+FONT_MODE ?= portable
+font_script = $(base_dir)/scripts/prepare-fonts.sh
+font_root = $(base_dir)/../resources/fonts
 
 $(shell mkdir -p $(working_dir))
 $(shell mkdir -p $(working_dir)/scss)
@@ -32,6 +35,7 @@ endef
 define build-typora
 	$(call build,$(1),$(typora),light)
 	$(call build,$(1),$(typora),dark)
+	sh "$(font_script)" "$(1)" "$(target_dir)/$(1)-$(typora)/target/latex_fonts" "$(FONT_MODE)"
 	if [ "$(1)" = "$(windows)" ]; then \
 		cp $(base_dir)/scripts/install.ps1 $(target_dir)/$(1)-$(typora); \
 	else \
@@ -40,12 +44,18 @@ define build-typora
 	cp $(base_dir)/README.md $(target_dir)/$(1)-$(typora)
 	cp $(base_dir)/../LICENSE $(target_dir)/$(1)-$(typora)
 	cp $(base_dir)/../credits.md $(target_dir)/$(1)-$(typora)
-	cp -r $(base_dir)/../resources $(target_dir)/$(1)-$(typora)/resources
+	mkdir -p $(target_dir)/$(1)-$(typora)/font-licenses
+	cp $(font_root)/licenses/*.txt $(target_dir)/$(1)-$(typora)/font-licenses/
+	cp $(font_root)/external/README.md $(target_dir)/$(1)-$(typora)/font-licenses/RESTRICTED-FONTS.md
 endef
 
 define build-pandoc
 	$(call build,$(linux),$(pandoc),light)
 	$(call build,$(linux),$(pandoc),dark)
+	sh "$(font_script)" "$(linux)" "$(target_dir)/$(linux)-$(pandoc)/target/latex_fonts" "$(FONT_MODE)"
+	mkdir -p $(target_dir)/$(linux)-$(pandoc)/font-licenses
+	cp $(font_root)/licenses/*.txt $(target_dir)/$(linux)-$(pandoc)/font-licenses/
+	cp $(font_root)/external/README.md $(target_dir)/$(linux)-$(pandoc)/font-licenses/RESTRICTED-FONTS.md
 endef
 
 .PHONY: all
@@ -53,9 +63,9 @@ all: windows macos linux
 
 .PHONY: all-and-compress
 all-and-compress: all
-	cd $(target_dir)/$(windows)-$(typora); zip -r $(target_dir)/latex-theme-$(windows).zip ./*
-	cd $(target_dir)/$(macos)-$(typora); zip -r $(target_dir)/latex-theme-$(macos).zip ./*
-	cd $(target_dir)/$(linux)-$(typora); zip -r $(target_dir)/latex-theme-$(linux).zip ./*
+	cd $(target_dir)/$(windows)-$(typora); zip -r -FS $(target_dir)/latex-theme-$(windows).zip ./*
+	cd $(target_dir)/$(macos)-$(typora); zip -r -FS $(target_dir)/latex-theme-$(macos).zip ./*
+	cd $(target_dir)/$(linux)-$(typora); zip -r -FS $(target_dir)/latex-theme-$(linux).zip ./*
 
 .PHONY: windows
 windows:

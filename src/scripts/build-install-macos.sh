@@ -102,8 +102,16 @@ fi
 
 echo "使用 Sass：$sass_bin"
 echo "正在编译 macOS 主题……"
+echo "将检测本机已安装字体，仅把缺失字形放入 target/latex_fonts。"
 
-if ! make -C "$src_dir" SASS="$sass_bin" macos; then
+font_manifest="$src_dir/../resources/fonts/manifest.json"
+if [ ! -f "$font_manifest" ]; then
+    echo "错误：未找到字体子模块清单。请先在项目根目录执行：" >&2
+    echo "git submodule update --init --recursive --depth 1" >&2
+    exit 1
+fi
+
+if ! make -C "$src_dir" SASS="$sass_bin" FONT_MODE=auto macos; then
     echo "主题编译失败，请检查上方错误信息。" >&2
     exit 1
 fi

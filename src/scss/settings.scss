@@ -10,23 +10,23 @@ $theme: "" !default;
   $chinese-kai-font: null;
   $chinese-fangsong-font: null;
   @if $os == "windows" {
-    $ui-font: "阿里巴巴普惠体 2.0", "微软雅黑";
-    $chinese-sans-serif-font: "华文黑体";
-    $chinese-serif-font: "家族宋", "宋体-简", "华文宋体";
-    $chinese-kai-font: "华文楷体";
-    $chinese-fangsong-font: "华文仿宋";
+    $ui-font: "TLT Alibaba PuHuiTi", "阿里巴巴普惠体 2.0", "微软雅黑", "TLT Noto Sans SC";
+    $chinese-sans-serif-font: "华文黑体", "Microsoft YaHei", "微软雅黑", "TLT Alibaba PuHuiTi", "TLT Noto Sans SC";
+    $chinese-serif-font: "TLT Family Song", "家族宋", "宋体-简", "华文宋体", "SimSun", "宋体", "TLT Noto Serif SC";
+    $chinese-kai-font: "TLT FZDoc Kai", "FZDocKai", "华文楷体", "KaiTi", "楷体", "TLT Noto Serif SC";
+    $chinese-fangsong-font: "TLT FZDoc FangSong", "FZDocFangSong", "华文仿宋", "FangSong", "仿宋", "TLT Noto Serif SC";
   } @else if $os == "macos" {
-    $ui-font: "PingFang SC";
-    $chinese-sans-serif-font: "STHeitiBold", "FZDocHei";
-    $chinese-serif-font: "Family Song", "Songti SC";
-    $chinese-kai-font: "FZDocKai";
-    $chinese-fangsong-font: "FZDocFangSong";
+    $ui-font: "PingFang SC", "TLT Noto Sans SC";
+    $chinese-sans-serif-font: "TLT STHeiti Bold", "STHeitiBold", "FZDocHei", "PingFang SC", "Heiti SC", "TLT Noto Sans SC";
+    $chinese-serif-font: "TLT Family Song", "Family Song", "Songti SC", "TLT Noto Serif SC";
+    $chinese-kai-font: "TLT FZDoc Kai", "FZDocKai", "Kaiti SC", "STKaiti", "TLT Noto Serif SC";
+    $chinese-fangsong-font: "TLT FZDoc FangSong", "FZDocFangSong", "STFangsong", "Songti SC", "TLT Noto Serif SC";
   } @else if $os == "linux" {
-    $ui-font: "Noto Sans CJK SC";
-    $chinese-sans-serif-font: "Noto Sans CJK SC";
-    $chinese-serif-font: "Noto Serif CJK SC";
-    $chinese-kai-font: "Noto Serif CJK SC";  // FIXME: 找到合适的开源楷体
-    $chinese-fangsong-font: "Noto Serif CJK SC";  // FIXME: 找到合适的开源仿宋字体
+    $ui-font: "Noto Sans CJK SC", "Source Han Sans SC", "TLT Noto Sans SC";
+    $chinese-sans-serif-font: "Noto Sans CJK SC", "Source Han Sans SC", "TLT Noto Sans SC";
+    $chinese-serif-font: "TLT Family Song", "FmlSong", "Noto Serif CJK SC", "Source Han Serif SC", "TLT Noto Serif SC";
+    $chinese-kai-font: "TLT FZDoc Kai", "FZDocKai", "Noto Serif CJK SC", "Source Han Serif SC", "TLT Noto Serif SC";
+    $chinese-fangsong-font: "TLT FZDoc FangSong", "FZDocFangSong", "Noto Serif CJK SC", "Source Han Serif SC", "TLT Noto Serif SC";
   }
 
   /* == 引用块设置 == */
@@ -38,15 +38,15 @@ $theme: "" !default;
 
   /* 基准字体 */
   /* 备选：Times, "Times New Roman" */
-  --base-latin-font: "Latin Modern Roman", "Latin Modern Roman 10", Times;
+  --base-latin-font: "TLT Latin Modern Roman", "Latin Modern Roman", "Latin Modern Roman 10", Times;
   --base-chinese-font: #{meta.inspect($chinese-serif-font)};
   --base-font-size: 9.5pt;
   /* 仅用于 Typora 屏幕预览；打印仍使用 base-font-size */
   --preview-base-font-size: 11.5pt;
 
   /* 引言字体 */
-  --quote-latin-font: "Latin Modern Roman", "Latin Modern Roman 10", Times, "Times New Roman";
-  --quote-chinese-font: "华文仿宋", "STFangsong";
+  --quote-latin-font: "TLT Latin Modern Roman", "Latin Modern Roman", "Latin Modern Roman 10", Times, "Times New Roman";
+  --quote-chinese-font: var(--heading-chinese-fangsong-font);
   /* em单位为一个正文字符（--base-font-size）大小，
   例如，如果您设置 --base-font-size 为 9.5pt，那么 1.05em = 1.05*9.5pt ≈ 10pt。下面的标题字体等设置也遵循该规则。
   这样，您就可以仅通过调整基准字体大小，而动态对其他元素大小做出调整。
@@ -56,7 +56,7 @@ $theme: "" !default;
   /* 代码字体（代码中的中文会调用 ui-font） */
   /* "Courier New" 从 Windows 3.1 起成为 Windows 官方提供的字体 */
   /* "Consolas" 从 Windows Vista 起成为 Windows 官方提供的字体 */
-  --code-font: "Latin Modern Mono", "Latin Modern Mono 10", "Consolas", "Courier New";
+  --code-font: "TLT Latin Modern Mono", "Latin Modern Mono", "Latin Modern Mono 10", "Consolas", "Courier New";
   --code-block-font-size: 0.92em;
   --code-block-line-height: 1.4;
 
@@ -65,7 +65,7 @@ $theme: "" !default;
 
   /* source mode 字体 */
   /* 默认调用 code-font 和 ui-font */
-  --sourceMode-font: "SF Mono", #{meta.inspect($ui-font)};
+  --sourceMode-font: "TLT Latin Modern Mono", "Latin Modern Mono", #{meta.inspect($ui-font)};
 
   /* 目录字体 */
   /* 默认调用 base-font */
@@ -88,7 +88,7 @@ $theme: "" !default;
   --heading-chinese-fangsong-font: #{meta.inspect($chinese-fangsong-font)};  /* 仿宋 */
   @if $os == "macos" {
     /* 注意，如果您使用macOS系统并更改了英文字体，请在此处更换标题英文字体粗体字重的postscript值 */
-    --heading-latin-font: "LMRoman10-Bold";
+    --heading-latin-font: "TLT Latin Modern Heading", "LMRoman10-Bold";
   } @else if $os == "windows" {
     --heading-latin-font: var(--base-latin-font);
   } @else if $os == "linux" {

@@ -1,6 +1,7 @@
 $os: "" !default;
 $theme: "" !default;
 
+@use "./fonts.scss" with ($os: $os, $theme: $theme);
 @use "./settings.scss" with ($os: $os, $theme: $theme);
 
 @use "./text.scss" with ($os: $os, $theme: $theme);

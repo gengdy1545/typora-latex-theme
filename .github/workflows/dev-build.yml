@@ -13,6 +13,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          submodules: recursive
+          fetch-depth: 1
       - name: Install Dart Sass
         uses: robinraju/release-downloader@v1
         with:
@@ -28,6 +31,7 @@ jobs:
         run: |
           cd ./src
           make -j3
+          python3 ./scripts/verify-fonts.py
       - name: Upload Artifact
         uses: actions/upload-artifact@v7
         with:

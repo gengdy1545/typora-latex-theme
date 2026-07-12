@@ -1,6 +1,105 @@
-Fonts/
+# -----------------------------------------------------------------------------
+# Operating systems
+# -----------------------------------------------------------------------------
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100/
+.fseventsd/
+.Spotlight-V100/
+.TemporaryItems/
+.Trashes/
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.stackdump
+
+# Linux desktop environments
+.directory
+
+# -----------------------------------------------------------------------------
+# Editors and IDEs
+# -----------------------------------------------------------------------------
+
+.idea/
+.vscode/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*.swn
+*~
+
+# -----------------------------------------------------------------------------
+# Build output and generated files
+# -----------------------------------------------------------------------------
+
 **/build/
-**/.sass-cache/
+**/dist/
 **/latex-theme/
-**/.DS_Store
-.idea/**
+**/.sass-cache/
+*.css.map
+*.scss.map
+
+# -----------------------------------------------------------------------------
+# Dependencies and tool caches
+# -----------------------------------------------------------------------------
+
+node_modules/
+__pycache__/
+*.py[cod]
+.cache/
+.parcel-cache/
+.npm/
+.yarn/
+.pnpm-store/
+.eslintcache
+.stylelintcache
+
+# -----------------------------------------------------------------------------
+# Tests and coverage
+# -----------------------------------------------------------------------------
+
+coverage/
+.nyc_output/
+
+# -----------------------------------------------------------------------------
+# Logs, temporary files, and local configuration
+# -----------------------------------------------------------------------------
+
+*.log
+*.pid
+*.seed
+*.tmp
+*.temp
+*.bak
+*.orig
+tmp/
+temp/
+.tmp/
+.temp/
+
+.env
+.env.*
+!.env.example
+*.local
+.direnv/
+
+# -----------------------------------------------------------------------------
+# Package-manager and runtime diagnostics
+# -----------------------------------------------------------------------------
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
