@@ -1,0 +1,865 @@
+/*
+ * Typora LaTeX Content for Obsidian
+ * 将 typora-latex-theme 的学术排版语言迁移到 Markdown 阅读模式与
+ * CodeMirror 6 Live Preview；不设置工作区背景，也不触及 Obsidian 界面。
+ */
+
+/* 2. 阅读模式与编辑模式的局部变量 */
+:is(
+  .markdown-preview-view,
+  .markdown-source-view.mod-cm6
+) {
+  --tlt-base-font-size: 1em;
+  --tlt-base-line-height: 1.618;
+  --tlt-first-line-indent: 2em;
+  --tlt-strong-weight: 900;
+  --tlt-text-color: var(--text-normal);
+  --tlt-heading-color: var(--text-normal);
+  --tlt-link-color: #2e67d3;
+  --tlt-link-hover-color: #1f4fa8;
+  --tlt-muted-color: #565d65;
+  --tlt-rule-color: #dddddd;
+  --tlt-quote-border-color: hsl(0 0% 70%);
+  --tlt-code-background: transparent;
+  --tlt-code-border-color: #1a1a1a;
+  --tlt-code-text-color: #171717;
+  --tlt-code-selection-color: rgb(0 74 173 / 18%);
+  --tlt-table-border-color: #1a1a1a;
+  --tlt-syntax-keyword-color: #003a9b;
+  --tlt-syntax-string-color: #067d17;
+  --tlt-syntax-number-color: #7a3e9d;
+  --tlt-syntax-type-color: #6f2da8;
+  --tlt-syntax-comment-color: #5d646c;
+  --tlt-syntax-tag-color: #004f9e;
+  --tlt-syntax-attribute-color: #8a3b12;
+  --tlt-syntax-operator-color: #202020;
+  --tlt-syntax-meta-color: #5a2d82;
+  --tlt-syntax-add-color: #087524;
+  --tlt-syntax-remove-color: #b21f2d;
+  --tlt-syntax-error-color: #b00020;
+  --tlt-callout-note-accent: #2c5a85;
+  --tlt-callout-note-background: rgb(24 58 99 / 6%);
+  --tlt-callout-tip-accent: #3b5f35;
+  --tlt-callout-tip-background: rgb(85 102 47 / 8%);
+  --tlt-callout-important-accent: #5d4773;
+  --tlt-callout-important-background: rgb(100 68 122 / 8%);
+  --tlt-callout-warning-accent: #875720;
+  --tlt-callout-warning-background: rgb(135 87 32 / 9%);
+  --tlt-callout-caution-accent: #8c1c1c;
+  --tlt-callout-caution-background: rgb(140 28 28 / 8%);
+  --tlt-diagram-background: rgb(0 0 0 / 1.5%);
+  --tlt-diagram-border-color: rgb(0 0 0 / 16%);
+  --tlt-diagram-text-color: #303030;
+  --tlt-diagram-node-fill: rgb(80 96 112 / 7%);
+  --tlt-diagram-node-border: #5b6672;
+  --tlt-diagram-group-fill: rgb(70 70 66 / 4%);
+  --tlt-diagram-group-border: #777773;
+  --tlt-diagram-note-fill: rgb(140 103 49 / 10%);
+  --tlt-diagram-note-border: #8c6731;
+  --tlt-diagram-line-color: #545454;
+}
+
+/* 3. 字体栈：仅查找本机字体，不加载 snippet 相对路径资源 */
+@font-face {
+  font-family: "TLT Obsidian Latin Modern Roman";
+  src: local("Latin Modern Roman 10 Regular"), local("LMRoman10-Regular"),
+    local("Latin Modern Roman");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT Obsidian Latin Modern Roman";
+  src: local("Latin Modern Roman 10 Italic"), local("LMRoman10-Italic");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT Obsidian Latin Modern Roman";
+  src: local("Latin Modern Roman 10 Bold"), local("LMRoman10-Bold");
+  font-style: normal;
+  font-weight: 700 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT Obsidian Latin Modern Heading";
+  src: local("Latin Modern Roman 10 Bold"), local("LMRoman10-Bold");
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TLT Obsidian Latin Modern Mono";
+  src: local("Latin Modern Mono 10 Regular"), local("LMMono10-Regular"),
+    local("Latin Modern Mono");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+:is(
+  .markdown-preview-view,
+  .markdown-source-view.mod-cm6
+) {
+  --tlt-latin-font: "TLT Obsidian Latin Modern Roman", "Latin Modern Roman",
+    "Times New Roman", Times, serif;
+  --tlt-chinese-serif-font: "Family Song", "FmlSong", "Songti SC",
+    "STSong", "华文宋体", SimSun, "宋体", "Noto Serif CJK SC",
+    "Source Han Serif SC", serif;
+  --tlt-heading-font: "TLT Obsidian Latin Modern Heading",
+    "Latin Modern Roman", "Times New Roman", Times, serif;
+  --tlt-chinese-sans-font: "STHeiti", "华文黑体", "PingFang SC",
+    "Microsoft YaHei", "微软雅黑", "Noto Sans CJK SC",
+    "Source Han Sans SC", sans-serif;
+  --tlt-chinese-kai-font: "FZDocKai", "Kaiti SC", STKaiti, KaiTi,
+    "楷体", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+  --tlt-chinese-fangsong-font: "FZDocFangSong", STFangsong, FangSong,
+    "仿宋", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC",
+    serif;
+  --tlt-code-font: "TLT Obsidian Latin Modern Mono", "Latin Modern Mono",
+    Consolas, "SFMono-Regular", Menlo, "Liberation Mono", "Courier New",
+    monospace;
+  --tlt-ui-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+}
+
+/* 4. Markdown 内容容器 */
+.markdown-preview-view {
+  color: var(--tlt-text-color);
+  font-family: var(--tlt-latin-font), var(--tlt-chinese-serif-font);
+  font-size: var(--tlt-base-font-size);
+}
+
+.markdown-source-view.mod-cm6 .cm-line:not(.HyperMD-frontmatter) {
+  color: var(--tlt-text-color);
+  font-family: var(--tlt-latin-font), var(--tlt-chinese-serif-font);
+  line-height: var(--tlt-base-line-height);
+}
+
+/* 5. 正文与段落 */
+.markdown-preview-view :is(p, .el-p) {
+  line-height: var(--tlt-base-line-height);
+}
+
+.markdown-preview-view p {
+  margin-block: 1em;
+  text-align: justify;
+}
+
+.markdown-preview-view p:not(
+  li p,
+  blockquote p,
+  .callout p,
+  .footnotes p,
+  th p,
+  td p
+) {
+  text-indent: var(--tlt-first-line-indent);
+}
+
+.markdown-source-view.mod-cm6 .HyperMD-paragraph:not(.HyperMD-frontmatter) {
+  font-size: var(--tlt-base-font-size);
+}
+
+/* 6. 标题 */
+.markdown-preview-view :is(h1, h2, h3, h4, h5, h6),
+.markdown-source-view.mod-cm6 :is(
+  .HyperMD-header-1,
+  .HyperMD-header-2,
+  .HyperMD-header-3,
+  .HyperMD-header-4,
+  .HyperMD-header-5,
+  .HyperMD-header-6
+) {
+  color: var(--tlt-heading-color);
+  font-weight: 700;
+}
+
+.markdown-preview-view h1,
+.markdown-source-view.mod-cm6 .HyperMD-header-1 {
+  font-family: var(--tlt-heading-font), var(--tlt-chinese-sans-font);
+  font-size: 1.9em;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.markdown-preview-view h2,
+.markdown-source-view.mod-cm6 .HyperMD-header-2 {
+  font-family: var(--tlt-heading-font), var(--tlt-chinese-sans-font);
+  font-size: 1.5em;
+  line-height: 1.3;
+}
+
+.markdown-preview-view h3,
+.markdown-source-view.mod-cm6 .HyperMD-header-3 {
+  font-family: var(--tlt-heading-font), var(--tlt-chinese-sans-font);
+  font-size: 1.25em;
+  line-height: 1.4;
+}
+
+.markdown-preview-view h4,
+.markdown-source-view.mod-cm6 .HyperMD-header-4 {
+  font-family: var(--tlt-heading-font), var(--tlt-chinese-kai-font);
+  font-size: 1.15em;
+  line-height: 1.45;
+}
+
+.markdown-preview-view h5,
+.markdown-source-view.mod-cm6 .HyperMD-header-5 {
+  font-family: var(--tlt-heading-font), var(--tlt-chinese-fangsong-font);
+  font-size: 1.1em;
+  line-height: 1.5;
+}
+
+.markdown-preview-view h6,
+.markdown-source-view.mod-cm6 .HyperMD-header-6 {
+  font-family: var(--tlt-heading-font), var(--tlt-chinese-fangsong-font);
+  font-size: 1.05em;
+  line-height: 1.55;
+}
+
+.markdown-source-view.mod-cm6 :is(
+  .cm-header-1,
+  .cm-header-2,
+  .cm-header-3,
+  .cm-header-4,
+  .cm-header-5,
+  .cm-header-6
+) {
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.markdown-preview-view h1 {
+  margin-block: 1.5em 1em;
+}
+
+.markdown-preview-view h2 {
+  margin-block: 1.45em 0.8em;
+}
+
+.markdown-preview-view h3 {
+  margin-block: 1.3em 0.7em;
+}
+
+.markdown-preview-view :is(h4, h5, h6) {
+  margin-block: 1.2em 0.6em;
+}
+
+/* 7. 标题编号：只在稳定的阅读模式 DOM 中默认启用 */
+.markdown-preview-view .markdown-preview-sizer {
+  counter-reset: tlt-heading-h2 tlt-heading-h3 tlt-heading-h4 tlt-heading-h5
+    tlt-heading-h6;
+}
+
+.markdown-preview-view h1 {
+  counter-reset: tlt-heading-h2 tlt-heading-h3 tlt-heading-h4 tlt-heading-h5
+    tlt-heading-h6;
+}
+
+.markdown-preview-view h2 {
+  counter-increment: tlt-heading-h2;
+  counter-reset: tlt-heading-h3 tlt-heading-h4 tlt-heading-h5 tlt-heading-h6;
+}
+
+.markdown-preview-view h3 {
+  counter-increment: tlt-heading-h3;
+  counter-reset: tlt-heading-h4 tlt-heading-h5 tlt-heading-h6;
+}
+
+.markdown-preview-view h4 {
+  counter-increment: tlt-heading-h4;
+  counter-reset: tlt-heading-h5 tlt-heading-h6;
+}
+
+.markdown-preview-view h5 {
+  counter-increment: tlt-heading-h5;
+  counter-reset: tlt-heading-h6;
+}
+
+.markdown-preview-view h6 {
+  counter-increment: tlt-heading-h6;
+}
+
+.markdown-preview-view h2::before {
+  content: counter(tlt-heading-h2);
+}
+
+.markdown-preview-view h3::before {
+  content: counter(tlt-heading-h2) "." counter(tlt-heading-h3);
+}
+
+.markdown-preview-view h4::before {
+  content: counter(tlt-heading-h2) "." counter(tlt-heading-h3) "."
+    counter(tlt-heading-h4);
+}
+
+.markdown-preview-view h5::before {
+  content: counter(tlt-heading-h2) "." counter(tlt-heading-h3) "."
+    counter(tlt-heading-h4) "." counter(tlt-heading-h5);
+}
+
+.markdown-preview-view h6::before {
+  content: counter(tlt-heading-h2) "." counter(tlt-heading-h3) "."
+    counter(tlt-heading-h4) "." counter(tlt-heading-h5) "."
+    counter(tlt-heading-h6);
+}
+
+.markdown-preview-view :is(h2, h3, h4, h5, h6)::before {
+  margin-right: 1.2em;
+}
+
+/* 8. 链接与文本强调 */
+.markdown-preview-view a,
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter)
+  :is(.cm-link, .cm-url, .cm-hmd-internal-link) {
+  color: var(--tlt-link-color);
+  text-decoration: none;
+}
+
+.markdown-preview-view a:is(:hover, :focus-visible),
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter)
+  :is(.cm-link, .cm-url, .cm-hmd-internal-link):hover {
+  color: var(--tlt-link-hover-color);
+}
+
+.markdown-preview-view strong,
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter) .cm-strong {
+  font-weight: var(--tlt-strong-weight);
+}
+
+.markdown-preview-view em,
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter) .cm-em {
+  font-style: italic;
+}
+
+/* 9. 列表与任务列表 */
+.markdown-preview-view :is(ul, ol) {
+  margin-block: 0;
+  padding-inline-start: 2em;
+}
+
+.markdown-preview-view ul {
+  list-style-type: disc;
+}
+
+.markdown-preview-view ul ul {
+  list-style-type: "–  ";
+}
+
+.markdown-preview-view ul ul ul {
+  list-style-type: "◦  ";
+}
+
+.markdown-preview-view ol {
+  list-style-type: decimal;
+}
+
+.markdown-preview-view ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-preview-view ol ol ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-preview-view li,
+.markdown-source-view.mod-cm6 .HyperMD-list-line {
+  margin-block: 0.2em;
+}
+
+.markdown-preview-view li > p {
+  margin-block: 0;
+}
+
+.markdown-preview-view .task-list-item-checkbox,
+.markdown-source-view.mod-cm6 .task-list-item-checkbox {
+  width: 1em;
+  height: 1em;
+  margin-inline-start: -1.5em;
+  accent-color: var(--tlt-link-color);
+}
+
+.markdown-source-view.mod-cm6 .HyperMD-list-line {
+  font-family: var(--tlt-latin-font), var(--tlt-chinese-serif-font);
+}
+
+/* 10. 引用块 */
+.markdown-preview-view blockquote,
+.markdown-source-view.mod-cm6 .HyperMD-quote {
+  color: var(--tlt-text-color);
+  font-family: var(--tlt-latin-font), var(--tlt-chinese-fangsong-font);
+  font-size: 1.05em;
+  font-style: normal;
+  border-left: 4px solid var(--tlt-quote-border-color);
+}
+
+.markdown-preview-view blockquote {
+  margin-inline: 0;
+  padding-inline: calc(2em - 4px) 2em;
+}
+
+.markdown-preview-view blockquote blockquote {
+  padding-right: 0;
+  font-size: inherit;
+}
+
+.markdown-source-view.mod-cm6 .HyperMD-quote {
+  padding-inline-start: 1em;
+}
+
+/* 11. Callout：对应原主题 Alert 的五种颜色语义 */
+.markdown-preview-view .callout,
+.markdown-source-view.mod-cm6 .callout {
+  margin-block: 1em;
+  padding: 1em 1.2em 1em 1.35em;
+  color: var(--tlt-text-color);
+  background-color: var(--tlt-callout-note-background);
+  border: 0;
+  border-left: 3px solid var(--tlt-callout-note-accent);
+  border-radius: 0 4px 4px 0;
+  font-family: var(--tlt-latin-font), var(--tlt-chinese-serif-font);
+  font-size: 1em;
+}
+
+.markdown-preview-view .callout-title,
+.markdown-source-view.mod-cm6 .callout-title {
+  color: var(--tlt-callout-note-accent);
+  font-family: var(--tlt-ui-font);
+  font-size: 0.82em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .callout[data-callout="tip"] {
+  background-color: var(--tlt-callout-tip-background);
+  border-left-color: var(--tlt-callout-tip-accent);
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .callout[data-callout="tip"] .callout-title {
+  color: var(--tlt-callout-tip-accent);
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .callout[data-callout="important"] {
+  background-color: var(--tlt-callout-important-background);
+  border-left-color: var(--tlt-callout-important-accent);
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .callout[data-callout="important"] .callout-title {
+  color: var(--tlt-callout-important-accent);
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .callout[data-callout="warning"] {
+  background-color: var(--tlt-callout-warning-background);
+  border-left-color: var(--tlt-callout-warning-accent);
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .callout[data-callout="warning"] .callout-title {
+  color: var(--tlt-callout-warning-accent);
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .callout[data-callout="caution"],
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .callout[data-callout="danger"],
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .callout[data-callout="error"] {
+  background-color: var(--tlt-callout-caution-background);
+  border-left-color: var(--tlt-callout-caution-accent);
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  :is(
+    .callout[data-callout="caution"],
+    .callout[data-callout="danger"],
+    .callout[data-callout="error"]
+  ) .callout-title {
+  color: var(--tlt-callout-caution-accent);
+}
+
+/* 12. 行内代码 */
+.markdown-preview-view :not(pre) > code,
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter) .cm-inline-code {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 0.08em;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--tlt-code-font), var(--tlt-ui-font);
+  font-size: 0.95em;
+}
+
+/* 13. 代码块与语法高亮 */
+.markdown-preview-view pre,
+.markdown-source-view.mod-cm6 .cm-embed-block pre {
+  color: var(--tlt-code-text-color);
+  background: var(--tlt-code-background);
+  border: 0;
+  border-top: 1.5px solid var(--tlt-code-border-color);
+  border-bottom: 1.5px solid var(--tlt-code-border-color);
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--tlt-code-font), var(--tlt-ui-font);
+  font-size: 0.92em;
+  line-height: 1.4;
+  text-align: left;
+  tab-size: 4;
+}
+
+.markdown-source-view.mod-cm6 .HyperMD-codeblock {
+  color: var(--tlt-code-text-color);
+  background: var(--tlt-code-background);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--tlt-code-font), var(--tlt-ui-font);
+  font-size: 0.92em;
+  line-height: 1.4;
+  text-align: left;
+  tab-size: 4;
+}
+
+.markdown-source-view.mod-cm6 .HyperMD-codeblock-begin {
+  border-top: 1.5px solid var(--tlt-code-border-color);
+}
+
+.markdown-source-view.mod-cm6 .HyperMD-codeblock-end {
+  border-bottom: 1.5px solid var(--tlt-code-border-color);
+}
+
+.markdown-preview-view pre {
+  margin-block: 1.2em;
+  padding: 0.8em 0.6em;
+  overflow-x: auto;
+}
+
+.markdown-preview-view pre code,
+.markdown-source-view.mod-cm6 .cm-embed-block pre code {
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  font-family: inherit;
+}
+
+.markdown-source-view.mod-cm6 .HyperMD-codeblock {
+  padding-inline: 0.6em;
+}
+
+.markdown-preview-view .token.keyword,
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter)
+  :is(.cm-keyword, .cm-builtin, .cm-qualifier) {
+  color: var(--tlt-syntax-keyword-color);
+  font-weight: 700;
+}
+
+.markdown-preview-view .token.string,
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter)
+  :is(.cm-string, .cm-string-2) {
+  color: var(--tlt-syntax-string-color);
+}
+
+.markdown-preview-view :is(.token.number, .token.boolean),
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter)
+  :is(.cm-number, .cm-atom) {
+  color: var(--tlt-syntax-number-color);
+}
+
+.markdown-preview-view :is(.token.class-name, .token.function),
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter)
+  :is(.cm-type, .cm-def, .cm-variable-2) {
+  color: var(--tlt-syntax-type-color);
+  font-weight: 600;
+}
+
+.markdown-preview-view .token.comment,
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter) .cm-comment {
+  color: var(--tlt-syntax-comment-color);
+  font-style: italic;
+}
+
+.markdown-preview-view .token.tag,
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter) .cm-tag {
+  color: var(--tlt-syntax-tag-color);
+}
+
+.markdown-preview-view :is(.token.attr-name, .token.property),
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter)
+  :is(.cm-attribute, .cm-property) {
+  color: var(--tlt-syntax-attribute-color);
+}
+
+.markdown-preview-view .token.operator,
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter) .cm-operator {
+  color: var(--tlt-syntax-operator-color);
+}
+
+.markdown-preview-view :is(.token.prolog, .token.doctype),
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter) .cm-meta {
+  color: var(--tlt-syntax-meta-color);
+}
+
+.markdown-preview-view .token.inserted,
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter) .cm-positive {
+  color: var(--tlt-syntax-add-color);
+}
+
+.markdown-preview-view .token.deleted,
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter) .cm-negative {
+  color: var(--tlt-syntax-remove-color);
+}
+
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter) .cm-error {
+  color: var(--tlt-syntax-error-color);
+  background: transparent;
+}
+
+/* 14. 表格：三线表；外层容器保留宽表横向滚动能力 */
+.markdown-preview-view .table-wrapper,
+.markdown-source-view.mod-cm6 .cm-table-widget {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.markdown-preview-view table,
+.markdown-source-view.mod-cm6 .cm-embed-block table,
+.markdown-source-view.mod-cm6 .cm-table-widget table {
+  width: auto;
+  margin-inline: auto;
+  color: var(--tlt-text-color);
+  background: transparent;
+  border: 0;
+  border-top: 1.6px solid var(--tlt-table-border-color);
+  border-bottom: 1.6px solid var(--tlt-table-border-color);
+  border-collapse: collapse;
+  font-family: var(--tlt-latin-font), var(--tlt-chinese-serif-font);
+  text-align: center;
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6) table thead {
+  border-bottom: 1px solid var(--tlt-table-border-color);
+  font-family: var(--tlt-heading-font), var(--tlt-chinese-sans-font);
+  font-weight: var(--tlt-strong-weight);
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  table :is(th, td) {
+  padding: 0.25em 0.55em;
+  background: transparent;
+  border: 0;
+}
+
+/* 15. 图片与媒体 */
+.markdown-preview-view :is(img, video),
+.markdown-source-view.mod-cm6 :is(.image-embed img, .media-embed img, video) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+  break-inside: avoid;
+}
+
+.markdown-preview-view :is(.image-embed, .media-embed),
+.markdown-source-view.mod-cm6 :is(.image-embed, .media-embed) {
+  max-width: 100%;
+}
+
+/* 16. 数学公式 */
+.markdown-preview-view :is(.math, mjx-container),
+.markdown-source-view.mod-cm6 :is(.math, mjx-container, .cm-math) {
+  color: var(--tlt-text-color);
+  font-size: 1em;
+}
+
+.markdown-preview-view mjx-container[display="true"],
+.markdown-source-view.mod-cm6 mjx-container[display="true"] {
+  margin-block: 1em;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* 17. 脚注 */
+.markdown-preview-view :is(.footnote-ref, .footnote-backref) {
+  color: inherit;
+  background: transparent;
+  text-decoration: none;
+}
+
+.markdown-preview-view .footnote-ref {
+  padding: 0;
+  font-size: 0.8em;
+}
+
+.markdown-preview-view .footnotes {
+  margin-top: 1.5em;
+  padding-inline-start: 2.5em;
+  font-size: 0.95em;
+}
+
+.markdown-preview-view .footnotes > ol > li {
+  margin-block: 0.5em;
+}
+
+.markdown-source-view.mod-cm6 :is(.cm-footref, .cm-hmd-footnote) {
+  color: inherit;
+  font-size: 0.95em;
+}
+
+/* 18. Mermaid：只着色，不强制 SVG 尺寸 */
+.markdown-preview-view .mermaid,
+.markdown-source-view.mod-cm6 .mermaid {
+  box-sizing: border-box;
+  max-width: 100%;
+  margin-block: 1.5em;
+  padding: 1em 1.2em;
+  overflow-x: auto;
+  color: var(--tlt-diagram-text-color);
+  background: var(--tlt-diagram-background);
+  border: 1px solid var(--tlt-diagram-border-color);
+  border-radius: 2px;
+  text-align: center;
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .mermaid :is(text, tspan, .nodeLabel, .edgeLabel, .cluster-label, .label) {
+  color: var(--tlt-diagram-text-color);
+  fill: var(--tlt-diagram-text-color);
+  font-family: var(--tlt-ui-font);
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .mermaid :is(.node rect, .node circle, .node ellipse, .node polygon) {
+  fill: var(--tlt-diagram-node-fill);
+  stroke: var(--tlt-diagram-node-border);
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .mermaid :is(.cluster rect, .actor, .labelBox) {
+  fill: var(--tlt-diagram-group-fill);
+  stroke: var(--tlt-diagram-group-border);
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .mermaid :is(.note, .note rect, .edgeLabel rect, .labelBkg) {
+  fill: var(--tlt-diagram-note-fill);
+  stroke: var(--tlt-diagram-note-border);
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .mermaid :is(
+    .edgePath .path,
+    .flowchart-link,
+    .messageLine0,
+    .messageLine1,
+    .actor-line,
+    .loopLine
+  ) {
+  stroke: var(--tlt-diagram-line-color);
+}
+
+/* 19. 分隔线 */
+.markdown-preview-view hr,
+.markdown-source-view.mod-cm6 .HyperMD-hr {
+  margin-block: 1.8em;
+  border: 0;
+  border-top: 1px solid var(--tlt-rule-color);
+}
+
+/* 20. 深色模式：变量仍只定义在 Markdown 内容根节点 */
+.theme-dark :is(
+  .markdown-preview-view,
+  .markdown-source-view.mod-cm6
+) {
+  --tlt-text-color: #dcdcdc;
+  --tlt-heading-color: #dddddd;
+  --tlt-link-color: #8bb1f9;
+  --tlt-link-hover-color: #b4ccfa;
+  --tlt-muted-color: #a7b0ba;
+  --tlt-rule-color: #888888;
+  --tlt-quote-border-color: #888888;
+  --tlt-code-border-color: #d8d8d8;
+  --tlt-code-text-color: #eeeeee;
+  --tlt-code-selection-color: rgb(122 162 255 / 28%);
+  --tlt-table-border-color: #d8d8d8;
+  --tlt-syntax-keyword-color: #7aa2ff;
+  --tlt-syntax-string-color: #7fd88a;
+  --tlt-syntax-number-color: #d0a4ff;
+  --tlt-syntax-type-color: #c792ea;
+  --tlt-syntax-comment-color: #a7b0ba;
+  --tlt-syntax-tag-color: #74c7ec;
+  --tlt-syntax-attribute-color: #f2b36f;
+  --tlt-syntax-operator-color: #f0f0f0;
+  --tlt-syntax-meta-color: #d1a6ff;
+  --tlt-syntax-add-color: #72db8c;
+  --tlt-syntax-remove-color: #ff7b86;
+  --tlt-syntax-error-color: #ff667d;
+  --tlt-callout-note-accent: #8bb1f9;
+  --tlt-callout-note-background: rgb(139 177 249 / 10%);
+  --tlt-callout-tip-accent: #9acb91;
+  --tlt-callout-tip-background: rgb(154 203 145 / 10%);
+  --tlt-callout-important-accent: #c6a4e2;
+  --tlt-callout-important-background: rgb(198 164 226 / 10%);
+  --tlt-callout-warning-accent: #dfb46f;
+  --tlt-callout-warning-background: rgb(223 180 111 / 10%);
+  --tlt-callout-caution-accent: #ee8b8b;
+  --tlt-callout-caution-background: rgb(238 139 139 / 10%);
+  --tlt-diagram-background: rgb(255 255 255 / 2.5%);
+  --tlt-diagram-border-color: rgb(255 255 255 / 18%);
+  --tlt-diagram-text-color: #dcdcdc;
+  --tlt-diagram-node-fill: rgb(139 177 249 / 10%);
+  --tlt-diagram-node-border: #91a5bd;
+  --tlt-diagram-group-fill: rgb(255 255 255 / 3.5%);
+  --tlt-diagram-group-border: #898989;
+  --tlt-diagram-note-fill: rgb(223 180 111 / 10%);
+  --tlt-diagram-note-border: #c59c5d;
+  --tlt-diagram-line-color: #b8b8b8;
+}
+
+/* 21. 可选功能与兼容性规则 */
+/*
+ * Live Preview 标题编号默认关闭。
+ * CodeMirror 6 会虚拟化并重绘行节点，纯 CSS counter 可能跳号或重置。
+ * 如能接受该风险，可删除下方 @supports 外层注释标记后自行加入编号规则；
+ * 本 snippet 不提供一个看似稳定但会误导用户的默认实现。
+ */
+
+@supports (overflow: clip) {
+  .markdown-preview-view :is(.table-wrapper, .mermaid),
+  .markdown-source-view.mod-cm6 :is(.cm-table-widget, .mermaid) {
+    overscroll-behavior-inline: contain;
+  }
+}
