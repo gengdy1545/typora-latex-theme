@@ -1,114 +1,88 @@
-![cover](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/cover.png)
-# Typora 伪装 LaTeX 中文样式主题
+# Typora LaTeX Theme 自用版
 
-[下载与安装](#下载与安装) | [帮助文档](https://github.com/Keldos-Li/typora-latex-theme/wiki) | [个性化设置](https://github.com/Keldos-Li/typora-latex-theme/wiki/%E4%B8%AA%E6%80%A7%E5%8C%96%E8%AE%BE%E7%BD%AE) | [贡献指南](https://github.com/Keldos-Li/typora-latex-theme/wiki/%E8%B4%A1%E7%8C%AE%E6%8C%87%E5%8D%97) | [技术细节](https://github.com/Keldos-Li/typora-latex-theme/wiki/%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82) | [常见问题](https://github.com/Keldos-Li/typora-latex-theme/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)  
+这是基于 [Keldos-Li/typora-latex-theme](https://github.com/Keldos-Li/typora-latex-theme) 修改的自用版本。原项目的主题介绍、排版效果与使用场景请直接查看上游仓库；本 README 只说明当前版本的改动和安装方式。
 
-本项目的初衷是为了简化中国大陆本科生**小型通识课论文**（或**小型实验报告**）撰写的负担。这里基本采用了浙江大学要求的格式（字体较小，页边距较小），但大部分同学都可以自行在 CSS 中修改适合自己学校的格式。  
+## 本版本的改进
 
-Markdown 的轻量化特性，使您可以专注于论文内容而不用担心格式。书写时仅通过简单的标记，并通过替换样例模板中的个人信息，您就可以输出类 LaTeX 排版的精美论文与报告。本项目支持 Windows, macOS 和 Linux 三大平台的 Typora。
-
-<a href="https://github.com/Keldos-Li/typora-latex-theme/releases">![GitHub downloads](https://img.shields.io/github/downloads/Keldos-Li/typora-latex-theme/total?logo=data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiPjxwYXRoIGQ9Ik0zNjIuNjYgNDIxLjMxVjg4YzAtMTMuMjUgMTAuNzUtMjQgMjQtMjRoMjUwLjY5YzEzLjI1IDAgMjQgMTAuNzUgMjQgMjR2MzMzLjMxYzAgOC44NCA3LjE2IDE2IDE2IDE2aDE2OS4zN2MxNC4yNSAwIDIxLjM5IDE3LjIzIDExLjMxIDI3LjMxbC0zMjkuMDkgMzI5LjFjLTkuMzcgOS4zNy0yNC41NyA5LjM3LTMzLjk0IDBsLTMyOS4wNC0zMjkuMWMtMTAuMDgtMTAuMDgtMi45NC0yNy4zMSAxMS4zMS0yNy4zMWgxNjkuMzljOC44NCAwIDE2LTcuMTYgMTYtMTZ6IG0tMjA4LjAxIDQ2NGg3MTQuNjljOC44NCAwIDE2IDcuMTYgMTYgMTZWOTQ0YzAgOC44NC03LjE2IDE2LTE2IDE2SDE1NC42NWMtOC44NCAwLTE2LTcuMTYtMTYtMTZ2LTQyLjY5YzAtOC44NCA3LjE2LTE2IDE2LTE2eiIgZmlsbD0iI2ZmZmZmZiI+PC9wYXRoPjwvc3ZnPg==)</a>
-<a href="https://github.com/Keldos-Li/typora-latex-theme/releases/latest">![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Keldos-Li/typora-latex-theme?include_prereleases&color=green&logo=hack-the-box)</a>
-<a href="https://github.com/Keldos-Li/typora-latex-theme/stargazers">![GitHub Repo stars](https://img.shields.io/github/stars/Keldos-Li/typora-latex-theme?style=flat&logo=github&color=yellow)</a>
-<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=IB2QSpQSSOQIDZfN74ujqx1aVtQtdtXF&jump_from=webapi">
-![QQ群](https://img.shields.io/badge/QQ群-643187070-89AED1?logo=Tencent-QQ)</a>
-
-## 预览
-
-您可以通过以下方式预览本主题：
-
-1. 通过[在线 PDF 预览器](https://blog.keldos.me/2021/05/md-latex-template/)预览导出结果
-2. 观看[介绍视频](https://www.bilibili.com/video/BV1634y1h7pE)，其中简洁清晰地介绍了主题外观和安装方法
-3. 查看下列截图
-
-### 封面，摘要和关键词
-
-| ![sample-essay_1](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/sample-essay_1.png)|![sample-essay_2](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/sample-essay_2.png)|
-| :----: | :----: |
-
-### 预览与编写
-
-| ![preview-l](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/preview-l.png)|![preview-d](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/preview-d.png)|
-| :----: | :----: |
-| ![edit-l](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/edit-l.png)|![edit-d](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/edit-d.png)|
-
-#### 层级标题 
-
-|![heading-l](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/heading-l.png)|![heading-d](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/heading-d.png)|
-| :----: | :----: |
-
-#### 表格 
-|![table-l](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/table-l.png)|![table-d](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/table-d.png)|
-| :----: | :----: |
-
-```markdown
-表格：
-
-<center><strong>表 2  全球/中国桌面操作系统市场份额占比（%）</strong></center>
-
-| OS   | Windows | macOS | Unknown | Linux | Chrome OS | 其他 |
-| ---- | ------- | ----- | ------- | ----- | --------- | ---- |
-| 全球 | 76.56   | 17.1  | 2.68    | 1.93  | 1.72      | 0.01 |
-| 中国 | 87.55   | 5.44  | 6.24    | 0.75  | 0.01      | 0.01 |
-```
-
-#### 项目列表
-|![item-l](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/item-l.png)|![item-d](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/item-d.png)|
-| :----: | :----: |
-
-#### 代码块 
-|![code-l](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/code-l.png)|![code-d](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/code-d.png)|
-| :----: | :----: |
-
-#### Mermaid
-|![mermaid-l](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/mermaid-l.png)|![mermaid-d](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/mermaid-d.png)|
-| :----: | :----: |
-
-```markdown
-mermaid 图形：
-
-​```mermaid
-graph LR
-A(开始) -->
-input[/输入a,b/] --> if{a%b=0 ?}
-if --->|yes| f1[GCD = b] --> B(结束)
-if --->|no| f2["a, b = b, a % b "]-->if
-​```
-```
-
-#### 公式
-
-|![equation-l](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/equation-l.png)|![equation-d](https://raw.githubusercontent.com/Keldos-Li/pictures/main/typora-latex-theme/equation-d.png)|
-| :----: | :----: |
-
-```latex
-公式：
-
-$$
-\iint\limits_{x^2 + y^2 \leq R^2} f(x,y)\,\mathrm{d}x\,\mathrm{d}y = \int_{\theta=0}^{2\pi} \mathrm{d}\theta\int_{r=0}^R f(r\cos\theta,r\sin\theta) r\,\mathrm{d}r\, \tag{1}
-$$
-```
+- 优化 Typora 的屏幕阅读体验，并保持打印、导出时的论文排版尺寸。
+- 重做代码块与语法高亮，完善浅色、深色主题下的可读性。
+- 完善 Mermaid 图表样式，覆盖流程图、时序图、类图、状态图、ER 图、饼图、甘特图、Git 图、思维导图、时间线、Sankey 等常见类型。
+- 支持 Typora/GitHub 风格的 `NOTE`、`TIP`、`IMPORTANT`、`WARNING`、`CAUTION` 提示块。
+- 发布包按 Windows、macOS、Linux 分平台构建，内置主题所需字体，并在发布前自动校验字体完整性。
+- 安装脚本会同时部署主题 CSS 和字体资源，无需再逐个下载、安装系统字体。
+- 提供 [Obsidian CSS Snippet](obsidian/README.md)，将相同的学术排版风格用于 Obsidian Markdown 内容。
 
 ## 下载与安装
 
-**请完整阅读以下过程，以确保一切符合预期。**  
+### 1. 下载对应平台的发布包
 
-1. [Typora](https://typora.io/) 是一个支持实时预览的 markdown 编辑器。在安装本主题前，请确认您已[下载 Typora](https://typora.io/#download) 并完成了安装。如果您对 markdown 的语法还不了解，您可以从这里[获得帮助](https://github.com/Keldos-Li/typora-latex-theme/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98#%E4%BB%80%E4%B9%88%E6%98%AF-markdown)。
+请先安装并至少运行一次 [Typora](https://typora.io/)，然后前往[本项目 Releases](https://github.com/gengdy1545/typora-latex-theme/releases)下载最新版本：
 
-2. 前往本项目的 [release](https://github.com/Keldos-Li/typora-latex-theme/releases) 页面，下载适合您操作系统的最新版本压缩包。比如，如果您在使用 Windows 操作系统，您就应该下载 `latex-theme-windows.zip`。 
+| 操作系统 | 发布包 |
+| --- | --- |
+| Windows | `latex-theme-windows.zip` |
+| macOS | `latex-theme-macos.zip` |
+| Linux | `latex-theme-linux.zip` |
 
-3. 解压缩这个文件，进入解压缩后的文件夹。按照[在线安装教程](https://github.com/Keldos-Li/typora-latex-theme/wiki/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B)或该文件夹下 `README.md` 中的安装教程**完成剩余的安装步骤**。请务必确认您完成了下面的步骤：
-     - [进行手动或自动主题安装](https://github.com/Keldos-Li/typora-latex-theme/wiki/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B#%E5%BC%80%E5%A7%8B%E5%AE%89%E8%A3%85)
+解压发布包后，可以选择自动安装或手动安装。
 
-发布包已经包含目标平台主题所需的完整字体。自动安装脚本会把字体保存在 Typora 主题目录中；它们不会注册到操作系统，也不需要用户逐个安装。手动安装时，请同时复制 `target` 中的两个 CSS 文件和 `latex_fonts` 文件夹。字体许可证及尚需核验的授权说明位于安装包根目录的 `font-licenses`；对外再分发前请先阅读。
+### 2. 自动安装
 
+- **Windows**：右键单击 `install.ps1`，选择“使用 PowerShell 运行”。如果系统拦截脚本，请先确认文件来自本项目，再允许本次执行。
+- **macOS**：打开“终端”，将 `install.sh` 拖入终端窗口，然后按回车执行。
+- **Linux**：在解压后的目录中执行 `sh ./install.sh`。
 
+脚本会把 `latex.css`、`latex-dark.css` 和 `latex_fonts` 一并复制到 Typora 主题目录。完成后请完全退出并重新打开 Typora，在“主题”菜单中选择 `Latex` 或 `Latex Dark`。
 
-## 鸣谢
+### 3. 手动安装
 
-本项目是在下面两个开源项目的基础上完成的：  
+按照 [Typora 官方主题安装说明](https://theme.typora.io/doc/Install-Theme/)打开主题文件夹，将以下内容全部复制进去：
 
-- [yfzhao20/Typora-markdown](https://github.com/yfzhao20/Typora-markdown)  
-- [du33169/typora-theme-essay_cn](https://github.com/du33169/typora-theme-essay_cn)  
+```text
+target/
+├── latex.css
+├── latex-dark.css
+└── latex_fonts/
+```
 
-感谢 [@大啊好我r中之](https://space.bilibili.com/239828907) 制作介绍视频  
+`latex_fonts` 必须与两个 CSS 文件保持同级，否则主题无法加载内置字体。复制完成后重启 Typora，并选择 `Latex` 或 `Latex Dark`。
+
+## 字体如何处理
+
+用户下载发布包时，目标平台所需的字体已经包含在压缩包中，因此安装期间不需要再联网下载字体，也不需要手动逐个安装字体文件。
+
+主题会优先使用电脑中已经存在的对应字体；缺少时才读取 Typora 主题目录下的 `latex_fonts`。这些字体只供主题使用，不会注册到 Windows、macOS 或 Linux 的系统字体目录，也不会修改已有系统字体。
+
+发布包包含 Latin Modern、Noto Sans/Serif SC、Family Song、方正公文楷体与仿宋，以及平台所需的标题或界面回退字体。字体许可证和授权说明位于发布包的 `font-licenses` 目录；如果要再次分发本仓库或安装包，请先阅读其中的说明。
+
+## Obsidian 使用方法
+
+本仓库同时提供 `obsidian/latex.css`。将它复制到 Obsidian Vault 的 `.obsidian/snippets/latex.css`，然后在“设置 → 外观 → CSS 代码片段”中刷新并启用 `latex`。
+
+该 Snippet 只调整 Markdown 内容，不覆盖 Obsidian 的界面字体，也不携带 Typora 的内置字体。完整功能、阅读模式与 Live Preview 的差异及已知限制见 [Obsidian 安装说明](obsidian/README.md)。
+
+## 从源码构建
+
+字体资源通过 Git Submodule 管理，克隆时需要一并获取：
+
+```bash
+git clone --recurse-submodules https://github.com/gengdy1545/typora-latex-theme.git
+cd typora-latex-theme
+make -C src all
+```
+
+已有仓库可先执行：
+
+```bash
+git submodule update --init --recursive --depth 1
+```
+
+构建需要 `make`、Dart Sass、`unzip`、Perl 及其核心模块 `JSON::PP`。默认的 `portable` 模式会生成包含目标平台完整字体的可移植安装包。
+
+macOS 用户也可以运行：
+
+```bash
+sh ./src/scripts/build-install-macos.sh
+```
+
+该脚本会检测 Dart Sass；缺少时可经用户确认后通过 Homebrew 安装。随后它会检测本机已有字体，只提取缺失字形，编译主题并安装到当前电脑的 Typora 主题目录。
