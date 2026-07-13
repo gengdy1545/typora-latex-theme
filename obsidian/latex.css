@@ -19,23 +19,7 @@
   --tlt-muted-color: #565d65;
   --tlt-rule-color: #dddddd;
   --tlt-quote-border-color: hsl(0 0% 70%);
-  --tlt-code-background: transparent;
-  --tlt-code-border-color: #1a1a1a;
-  --tlt-code-text-color: #171717;
-  --tlt-code-selection-color: rgb(0 74 173 / 18%);
   --tlt-table-border-color: #1a1a1a;
-  --tlt-syntax-keyword-color: #003a9b;
-  --tlt-syntax-string-color: #067d17;
-  --tlt-syntax-number-color: #7a3e9d;
-  --tlt-syntax-type-color: #6f2da8;
-  --tlt-syntax-comment-color: #5d646c;
-  --tlt-syntax-tag-color: #004f9e;
-  --tlt-syntax-attribute-color: #8a3b12;
-  --tlt-syntax-operator-color: #202020;
-  --tlt-syntax-meta-color: #5a2d82;
-  --tlt-syntax-add-color: #087524;
-  --tlt-syntax-remove-color: #b21f2d;
-  --tlt-syntax-error-color: #b00020;
   --tlt-callout-note-accent: #2c5a85;
   --tlt-callout-note-background: rgb(24 58 99 / 6%);
   --tlt-callout-tip-accent: #3b5f35;
@@ -65,7 +49,8 @@
   color: var(--tlt-text-color);
 }
 
-.markdown-source-view.mod-cm6 .cm-line:not(.HyperMD-frontmatter) {
+.markdown-source-view.mod-cm6
+  .cm-line:not(.HyperMD-frontmatter, .HyperMD-codeblock) {
   color: var(--tlt-text-color);
   line-height: var(--tlt-base-line-height);
 }
@@ -237,7 +222,7 @@
 /* 8. 链接与文本强调 */
 .markdown-preview-view a,
 .markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter)
+  .cm-line:not(.HyperMD-frontmatter, .HyperMD-codeblock)
   :is(.cm-link, .cm-url, .cm-hmd-internal-link) {
   color: var(--tlt-link-color);
   text-decoration: none;
@@ -245,20 +230,20 @@
 
 .markdown-preview-view a:is(:hover, :focus-visible),
 .markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter)
+  .cm-line:not(.HyperMD-frontmatter, .HyperMD-codeblock)
   :is(.cm-link, .cm-url, .cm-hmd-internal-link):hover {
   color: var(--tlt-link-hover-color);
 }
 
 .markdown-preview-view strong,
 .markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter) .cm-strong {
+  .cm-line:not(.HyperMD-frontmatter, .HyperMD-codeblock) .cm-strong {
   font-weight: var(--tlt-strong-weight);
 }
 
 .markdown-preview-view em,
 .markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter) .cm-em {
+  .cm-line:not(.HyperMD-frontmatter, .HyperMD-codeblock) .cm-em {
   font-style: italic;
 }
 
@@ -406,156 +391,7 @@
   color: var(--tlt-callout-caution-accent);
 }
 
-/* 12. 行内代码 */
-.markdown-preview-view :not(pre) > code,
-.markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter) .cm-inline-code {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0 0.08em;
-  color: inherit;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  font-size: 0.95em;
-}
-
-/* 13. 代码块与语法高亮 */
-.markdown-preview-view pre,
-.markdown-source-view.mod-cm6 .cm-embed-block pre {
-  color: var(--tlt-code-text-color);
-  background: var(--tlt-code-background);
-  border: 0;
-  border-top: 1.5px solid var(--tlt-code-border-color);
-  border-bottom: 1.5px solid var(--tlt-code-border-color);
-  border-radius: 0;
-  box-shadow: none;
-  font-size: 0.92em;
-  line-height: 1.4;
-  text-align: left;
-  tab-size: 4;
-}
-
-.markdown-source-view.mod-cm6 .HyperMD-codeblock {
-  color: var(--tlt-code-text-color);
-  background: var(--tlt-code-background);
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  font-size: 0.92em;
-  line-height: 1.4;
-  text-align: left;
-  tab-size: 4;
-}
-
-.markdown-source-view.mod-cm6 .HyperMD-codeblock-begin {
-  border-top: 1.5px solid var(--tlt-code-border-color);
-}
-
-.markdown-source-view.mod-cm6 .HyperMD-codeblock-end {
-  border-bottom: 1.5px solid var(--tlt-code-border-color);
-}
-
-.markdown-preview-view pre {
-  margin-block: 1.2em;
-  padding: 0.8em 0.6em;
-  overflow-x: auto;
-}
-
-.markdown-preview-view pre code,
-.markdown-source-view.mod-cm6 .cm-embed-block pre code {
-  padding: 0;
-  color: inherit;
-  background: transparent;
-  border: 0;
-}
-
-.markdown-source-view.mod-cm6 .HyperMD-codeblock {
-  padding-inline: 0.6em;
-}
-
-.markdown-preview-view .token.keyword,
-.markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter)
-  :is(.cm-keyword, .cm-builtin, .cm-qualifier) {
-  color: var(--tlt-syntax-keyword-color);
-  font-weight: 700;
-}
-
-.markdown-preview-view .token.string,
-.markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter)
-  :is(.cm-string, .cm-string-2) {
-  color: var(--tlt-syntax-string-color);
-}
-
-.markdown-preview-view :is(.token.number, .token.boolean),
-.markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter)
-  :is(.cm-number, .cm-atom) {
-  color: var(--tlt-syntax-number-color);
-}
-
-.markdown-preview-view :is(.token.class-name, .token.function),
-.markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter)
-  :is(.cm-type, .cm-def, .cm-variable-2) {
-  color: var(--tlt-syntax-type-color);
-  font-weight: 600;
-}
-
-.markdown-preview-view .token.comment,
-.markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter) .cm-comment {
-  color: var(--tlt-syntax-comment-color);
-  font-style: italic;
-}
-
-.markdown-preview-view .token.tag,
-.markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter) .cm-tag {
-  color: var(--tlt-syntax-tag-color);
-}
-
-.markdown-preview-view :is(.token.attr-name, .token.property),
-.markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter)
-  :is(.cm-attribute, .cm-property) {
-  color: var(--tlt-syntax-attribute-color);
-}
-
-.markdown-preview-view .token.operator,
-.markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter) .cm-operator {
-  color: var(--tlt-syntax-operator-color);
-}
-
-.markdown-preview-view :is(.token.prolog, .token.doctype),
-.markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter) .cm-meta {
-  color: var(--tlt-syntax-meta-color);
-}
-
-.markdown-preview-view .token.inserted,
-.markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter) .cm-positive {
-  color: var(--tlt-syntax-add-color);
-}
-
-.markdown-preview-view .token.deleted,
-.markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter) .cm-negative {
-  color: var(--tlt-syntax-remove-color);
-}
-
-.markdown-source-view.mod-cm6
-  .cm-line:not(.HyperMD-frontmatter) .cm-error {
-  color: var(--tlt-syntax-error-color);
-  background: transparent;
-}
-
-/* 14. 表格：三线表；外层容器保留宽表横向滚动能力 */
+/* 12. 表格：三线表；外层容器保留宽表横向滚动能力 */
 .markdown-preview-view .table-wrapper,
 .markdown-source-view.mod-cm6 .cm-table-widget {
   max-width: 100%;
@@ -588,7 +424,7 @@
   border: 0;
 }
 
-/* 15. 图片与媒体 */
+/* 13. 图片与媒体 */
 .markdown-preview-view :is(img, video),
 .markdown-source-view.mod-cm6 :is(.image-embed img, .media-embed img, video) {
   display: block;
@@ -603,7 +439,7 @@
   max-width: 100%;
 }
 
-/* 16. 数学公式 */
+/* 14. 数学公式 */
 .markdown-preview-view :is(.math, mjx-container),
 .markdown-source-view.mod-cm6 :is(.math, mjx-container, .cm-math) {
   color: var(--tlt-text-color);
@@ -617,7 +453,7 @@
   overflow-y: hidden;
 }
 
-/* 17. 脚注 */
+/* 15. 脚注 */
 .markdown-preview-view :is(.footnote-ref, .footnote-backref) {
   color: inherit;
   background: transparent;
@@ -644,7 +480,7 @@
   font-size: 0.95em;
 }
 
-/* 18. Mermaid：只着色，不强制 SVG 尺寸 */
+/* 16. Mermaid：只着色，不强制 SVG 尺寸 */
 .markdown-preview-view .mermaid,
 .markdown-source-view.mod-cm6 .mermaid {
   box-sizing: border-box;
@@ -695,7 +531,7 @@
   stroke: var(--tlt-diagram-line-color);
 }
 
-/* 19. 分隔线 */
+/* 17. 分隔线 */
 .markdown-preview-view hr,
 .markdown-source-view.mod-cm6 .HyperMD-hr {
   margin-block: 1.8em;
@@ -703,7 +539,7 @@
   border-top: 1px solid var(--tlt-rule-color);
 }
 
-/* 20. 深色模式：变量仍只定义在 Markdown 内容根节点 */
+/* 18. 深色模式：变量仍只定义在 Markdown 内容根节点 */
 .theme-dark :is(
   .markdown-preview-view,
   .markdown-source-view.mod-cm6
@@ -715,22 +551,7 @@
   --tlt-muted-color: #a7b0ba;
   --tlt-rule-color: #888888;
   --tlt-quote-border-color: #888888;
-  --tlt-code-border-color: #d8d8d8;
-  --tlt-code-text-color: #eeeeee;
-  --tlt-code-selection-color: rgb(122 162 255 / 28%);
   --tlt-table-border-color: #d8d8d8;
-  --tlt-syntax-keyword-color: #7aa2ff;
-  --tlt-syntax-string-color: #7fd88a;
-  --tlt-syntax-number-color: #d0a4ff;
-  --tlt-syntax-type-color: #c792ea;
-  --tlt-syntax-comment-color: #a7b0ba;
-  --tlt-syntax-tag-color: #74c7ec;
-  --tlt-syntax-attribute-color: #f2b36f;
-  --tlt-syntax-operator-color: #f0f0f0;
-  --tlt-syntax-meta-color: #d1a6ff;
-  --tlt-syntax-add-color: #72db8c;
-  --tlt-syntax-remove-color: #ff7b86;
-  --tlt-syntax-error-color: #ff667d;
   --tlt-callout-note-accent: #8bb1f9;
   --tlt-callout-note-background: rgb(139 177 249 / 10%);
   --tlt-callout-tip-accent: #9acb91;
@@ -753,7 +574,7 @@
   --tlt-diagram-line-color: #b8b8b8;
 }
 
-/* 21. 可选功能与兼容性规则 */
+/* 19. 可选功能与兼容性规则 */
 /*
  * Live Preview 标题编号默认关闭。
  * CodeMirror 6 会虚拟化并重绘行节点，纯 CSS counter 可能跳号或重置。

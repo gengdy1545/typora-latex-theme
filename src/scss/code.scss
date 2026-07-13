@@ -95,6 +95,26 @@ pre.md-fences.ty-contain-cm .md-fences-adv-panel .md-lang {
   opacity: 0.75;
 }
 
+/* 算法自动编号 */
+body {
+  counter-reset: algorithm;
+}
+
+#write > pre.md-fences {
+  counter-increment: algorithm;
+}
+
+#write > pre.md-fences::before {
+  content: "Algorithm " counter(algorithm);
+  display: block;
+  margin: -0.8em -0.6em 0.8em;
+  padding: 0.35em 0.6em;
+  border-bottom: 1.5px solid var(--code-block-border-color);
+  font-family: var(--base-latin-font), var(--base-chinese-font), serif;
+  font-weight: var(--strong-weight);
+  line-height: var(--code-block-line-height);
+}
+
 .CodeMirror-code pre,
 .CodeMirror-sizer {
   font-family: var(--code-font), var(--ui-font), monospace;
