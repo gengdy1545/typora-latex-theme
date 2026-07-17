@@ -156,8 +156,7 @@
   margin-block: 1.2em 0.6em;
 }
 
-/* 7. 标题编号：只在稳定的阅读模式 DOM 中默认启用 */
-.markdown-preview-view .markdown-preview-sizer {
+.markdown-preview-view {
   counter-reset: tlt-heading-h2 tlt-heading-h3 tlt-heading-h4 tlt-heading-h5
     tlt-heading-h6;
 }
@@ -189,6 +188,35 @@
 
 .markdown-preview-view h6 {
   counter-increment: tlt-heading-h6;
+}
+
+@supports (counter-set: none) {
+  .markdown-preview-view h1 {
+    counter-set: tlt-heading-h2 0 tlt-heading-h3 0 tlt-heading-h4 0
+      tlt-heading-h5 0 tlt-heading-h6 0;
+    counter-reset: none;
+  }
+
+  .markdown-preview-view h2 {
+    counter-set: tlt-heading-h3 0 tlt-heading-h4 0 tlt-heading-h5 0
+      tlt-heading-h6 0;
+    counter-reset: none;
+  }
+
+  .markdown-preview-view h3 {
+    counter-set: tlt-heading-h4 0 tlt-heading-h5 0 tlt-heading-h6 0;
+    counter-reset: none;
+  }
+
+  .markdown-preview-view h4 {
+    counter-set: tlt-heading-h5 0 tlt-heading-h6 0;
+    counter-reset: none;
+  }
+
+  .markdown-preview-view h5 {
+    counter-set: tlt-heading-h6 0;
+    counter-reset: none;
+  }
 }
 
 .markdown-preview-view h2::before {
@@ -467,12 +495,33 @@
 
 .markdown-preview-view .footnotes {
   margin-top: 1.5em;
-  padding-inline-start: 2.5em;
+  padding-inline-start: 0;
   font-size: 0.95em;
 }
 
+.markdown-preview-view .footnotes > ol {
+  padding-inline-start: 0;
+  list-style: none;
+  counter-reset: tlt-footnote;
+}
+
 .markdown-preview-view .footnotes > ol > li {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: 0.35em;
   margin-block: 0.5em;
+  padding-inline-start: 0;
+  counter-increment: tlt-footnote;
+}
+
+.markdown-preview-view .footnotes > ol > li::before {
+  grid-column: 1;
+  grid-row: 1;
+  content: counter(tlt-footnote) ".";
+}
+
+.markdown-preview-view .footnotes > ol > li > * {
+  grid-column: 2;
 }
 
 .markdown-source-view.mod-cm6 :is(.cm-footref, .cm-hmd-footnote) {
