@@ -467,6 +467,41 @@
   max-width: 100%;
 }
 
+/* 图片对齐：![[example.png#pic_left]]、#pic_center、#pic_right */
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6 .cm-content)
+  :is(.image-embed, .media-embed):is(
+    [src*="#pic_left"],
+    [src*="#pic_center"],
+    [src*="#pic_right"]
+  ) {
+  display: flex;
+  width: 100%;
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6 .cm-content)
+  :is(.image-embed, .media-embed):is(
+    [src*="#pic_left"],
+    [src*="#pic_center"],
+    [src*="#pic_right"]
+  ) :is(img, video) {
+  margin-inline: 0;
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6 .cm-content)
+  :is(.image-embed, .media-embed)[src*="#pic_left"] {
+  justify-content: flex-start;
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6 .cm-content)
+  :is(.image-embed, .media-embed)[src*="#pic_center"] {
+  justify-content: center;
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6 .cm-content)
+  :is(.image-embed, .media-embed)[src*="#pic_right"] {
+  justify-content: flex-end;
+}
+
 /* 14. 数学公式 */
 .markdown-preview-view :is(.math, mjx-container),
 .markdown-source-view.mod-cm6 :is(.math, mjx-container, .cm-math) {

@@ -10,7 +10,7 @@
 - 支持 Typora/GitHub 风格的 `NOTE`、`TIP`、`IMPORTANT`、`WARNING`、`CAUTION` 提示块。
 - 发布包按 Windows、macOS、Linux 分平台构建，内置主题所需字体，并在发布前自动校验字体完整性。
 - 安装脚本会同时部署主题 CSS 和字体资源，无需再逐个下载、安装系统字体。
-- 提供 [Obsidian CSS Snippet](obsidian/README.md)，将相同的学术排版风格用于 Obsidian Markdown 内容。
+- 提供 [Obsidian CSS Snippet](obsidian/README.md)，将相同的学术排版风格用于 Obsidian Markdown 内容，并支持 `#pic_left`、`#pic_center`、`#pic_right` 图片对齐语法。
 
 ## 下载与安装
 
@@ -59,7 +59,7 @@ target/
 
 本仓库同时提供 `obsidian/latex.css`。将它复制到 Obsidian Vault 的 `.obsidian/snippets/latex.css`，然后在“设置 → 外观 → CSS 代码片段”中刷新并启用 `latex`。
 
-该 Snippet 只调整 Markdown 内容，不覆盖 Obsidian 的界面字体，也不携带 Typora 的内置字体。完整功能、阅读模式与 Live Preview 的差异及已知限制见 [Obsidian 安装说明](obsidian/README.md)。
+该 Snippet 只调整 Markdown 内容，不覆盖 Obsidian 的界面字体，也不携带 Typora 的内置字体。图片默认居中，也可以在嵌入链接后追加 `#pic_left`、`#pic_center` 或 `#pic_right` 指定对齐方式，例如 `![[example.png#pic_center|500]]`。完整功能、阅读模式与 Live Preview 的差异及已知限制见 [Obsidian 安装说明](obsidian/README.md)。
 
 ## 从源码构建
 
