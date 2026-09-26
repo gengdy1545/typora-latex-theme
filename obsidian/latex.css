@@ -1,10 +1,10 @@
 /*
- * Typora LaTeX Content for Obsidian
- * 将 typora-latex-theme 的学术排版语言迁移到 Markdown 阅读模式与
- * CodeMirror 6 Live Preview；不设置工作区背景，也不触及 Obsidian 界面。
+ * Obsidian Markdown 学术排版。
+ * 只作用于阅读模式与 Live Preview 的内容，不改工作区背景和界面。
+ * 标题编号仅在导出时生成。
  */
 
-/* 2. 阅读模式与编辑模式的局部变量 */
+/* 1. 阅读模式与编辑模式的局部变量 */
 :is(
   .markdown-preview-view,
   .markdown-source-view.mod-cm6
@@ -42,9 +42,7 @@
   --tlt-diagram-line-color: #545454;
 }
 
-/* 3. 字体由 Obsidian 的外观设置统一管理 */
-
-/* 4. Markdown 内容容器 */
+/* 2. Markdown 内容容器 */
 .markdown-preview-view {
   color: var(--tlt-text-color);
 }
@@ -55,7 +53,7 @@
   line-height: var(--tlt-base-line-height);
 }
 
-/* 5. 正文与段落 */
+/* 3. 正文与段落 */
 .markdown-preview-view :is(p, .el-p) {
   line-height: var(--tlt-base-line-height);
 }
@@ -76,7 +74,7 @@
   text-indent: var(--tlt-first-line-indent);
 }
 
-/* 6. 标题 */
+/* 4. 标题 */
 .markdown-preview-view :is(h1, h2, h3, h4, h5, h6),
 .markdown-source-view.mod-cm6 :is(
   .HyperMD-header-1,
@@ -156,98 +154,101 @@
   margin-block: 1.2em 0.6em;
 }
 
-.markdown-preview-view {
-  counter-reset: tlt-heading-h2 tlt-heading-h3 tlt-heading-h4 tlt-heading-h5
-    tlt-heading-h6;
-}
+/* 5. 标题编号：仅导出 */
+@media print {
+  .markdown-preview-view {
+    counter-reset: tlt-heading-h2 tlt-heading-h3 tlt-heading-h4 tlt-heading-h5
+      tlt-heading-h6;
+  }
 
-.markdown-preview-view h1 {
-  counter-reset: tlt-heading-h2 tlt-heading-h3 tlt-heading-h4 tlt-heading-h5
-    tlt-heading-h6;
-}
-
-.markdown-preview-view h2 {
-  counter-increment: tlt-heading-h2;
-  counter-reset: tlt-heading-h3 tlt-heading-h4 tlt-heading-h5 tlt-heading-h6;
-}
-
-.markdown-preview-view h3 {
-  counter-increment: tlt-heading-h3;
-  counter-reset: tlt-heading-h4 tlt-heading-h5 tlt-heading-h6;
-}
-
-.markdown-preview-view h4 {
-  counter-increment: tlt-heading-h4;
-  counter-reset: tlt-heading-h5 tlt-heading-h6;
-}
-
-.markdown-preview-view h5 {
-  counter-increment: tlt-heading-h5;
-  counter-reset: tlt-heading-h6;
-}
-
-.markdown-preview-view h6 {
-  counter-increment: tlt-heading-h6;
-}
-
-@supports (counter-set: none) {
   .markdown-preview-view h1 {
-    counter-set: tlt-heading-h2 0 tlt-heading-h3 0 tlt-heading-h4 0
-      tlt-heading-h5 0 tlt-heading-h6 0;
-    counter-reset: none;
+    counter-reset: tlt-heading-h2 tlt-heading-h3 tlt-heading-h4 tlt-heading-h5
+      tlt-heading-h6;
   }
 
   .markdown-preview-view h2 {
-    counter-set: tlt-heading-h3 0 tlt-heading-h4 0 tlt-heading-h5 0
-      tlt-heading-h6 0;
-    counter-reset: none;
+    counter-increment: tlt-heading-h2;
+    counter-reset: tlt-heading-h3 tlt-heading-h4 tlt-heading-h5 tlt-heading-h6;
   }
 
   .markdown-preview-view h3 {
-    counter-set: tlt-heading-h4 0 tlt-heading-h5 0 tlt-heading-h6 0;
-    counter-reset: none;
+    counter-increment: tlt-heading-h3;
+    counter-reset: tlt-heading-h4 tlt-heading-h5 tlt-heading-h6;
   }
 
   .markdown-preview-view h4 {
-    counter-set: tlt-heading-h5 0 tlt-heading-h6 0;
-    counter-reset: none;
+    counter-increment: tlt-heading-h4;
+    counter-reset: tlt-heading-h5 tlt-heading-h6;
   }
 
   .markdown-preview-view h5 {
-    counter-set: tlt-heading-h6 0;
-    counter-reset: none;
+    counter-increment: tlt-heading-h5;
+    counter-reset: tlt-heading-h6;
+  }
+
+  .markdown-preview-view h6 {
+    counter-increment: tlt-heading-h6;
+  }
+
+  @supports (counter-set: none) {
+    .markdown-preview-view h1 {
+      counter-set: tlt-heading-h2 0 tlt-heading-h3 0 tlt-heading-h4 0
+        tlt-heading-h5 0 tlt-heading-h6 0;
+      counter-reset: none;
+    }
+
+    .markdown-preview-view h2 {
+      counter-set: tlt-heading-h3 0 tlt-heading-h4 0 tlt-heading-h5 0
+        tlt-heading-h6 0;
+      counter-reset: none;
+    }
+
+    .markdown-preview-view h3 {
+      counter-set: tlt-heading-h4 0 tlt-heading-h5 0 tlt-heading-h6 0;
+      counter-reset: none;
+    }
+
+    .markdown-preview-view h4 {
+      counter-set: tlt-heading-h5 0 tlt-heading-h6 0;
+      counter-reset: none;
+    }
+
+    .markdown-preview-view h5 {
+      counter-set: tlt-heading-h6 0;
+      counter-reset: none;
+    }
+  }
+
+  .markdown-preview-view h2::before {
+    content: counter(tlt-heading-h2);
+  }
+
+  .markdown-preview-view h3::before {
+    content: counter(tlt-heading-h2) "." counter(tlt-heading-h3);
+  }
+
+  .markdown-preview-view h4::before {
+    content: counter(tlt-heading-h2) "." counter(tlt-heading-h3) "."
+      counter(tlt-heading-h4);
+  }
+
+  .markdown-preview-view h5::before {
+    content: counter(tlt-heading-h2) "." counter(tlt-heading-h3) "."
+      counter(tlt-heading-h4) "." counter(tlt-heading-h5);
+  }
+
+  .markdown-preview-view h6::before {
+    content: counter(tlt-heading-h2) "." counter(tlt-heading-h3) "."
+      counter(tlt-heading-h4) "." counter(tlt-heading-h5) "."
+      counter(tlt-heading-h6);
+  }
+
+  .markdown-preview-view :is(h2, h3, h4, h5, h6)::before {
+    margin-right: 1.2em;
   }
 }
 
-.markdown-preview-view h2::before {
-  content: counter(tlt-heading-h2);
-}
-
-.markdown-preview-view h3::before {
-  content: counter(tlt-heading-h2) "." counter(tlt-heading-h3);
-}
-
-.markdown-preview-view h4::before {
-  content: counter(tlt-heading-h2) "." counter(tlt-heading-h3) "."
-    counter(tlt-heading-h4);
-}
-
-.markdown-preview-view h5::before {
-  content: counter(tlt-heading-h2) "." counter(tlt-heading-h3) "."
-    counter(tlt-heading-h4) "." counter(tlt-heading-h5);
-}
-
-.markdown-preview-view h6::before {
-  content: counter(tlt-heading-h2) "." counter(tlt-heading-h3) "."
-    counter(tlt-heading-h4) "." counter(tlt-heading-h5) "."
-    counter(tlt-heading-h6);
-}
-
-.markdown-preview-view :is(h2, h3, h4, h5, h6)::before {
-  margin-right: 1.2em;
-}
-
-/* 8. 链接与文本强调 */
+/* 6. 链接与文本强调 */
 .markdown-preview-view a,
 .markdown-source-view.mod-cm6
   .cm-line:not(.HyperMD-frontmatter, .HyperMD-codeblock)
@@ -275,7 +276,7 @@
   font-style: italic;
 }
 
-/* 9. 列表与任务列表 */
+/* 7. 列表与任务列表 */
 .markdown-preview-view :is(ul, ol) {
   margin-block: 0;
   padding-inline-start: 2em;
@@ -322,7 +323,7 @@
   accent-color: var(--tlt-link-color);
 }
 
-/* 10. 引用块 */
+/* 8. 引用块 */
 .markdown-preview-view blockquote,
 .markdown-source-view.mod-cm6 .HyperMD-quote {
   color: var(--tlt-text-color);
@@ -345,7 +346,7 @@
   padding-inline-start: 1em;
 }
 
-/* 11. Callout：对应原主题 Alert 的五种颜色语义 */
+/* 9. Callout */
 .markdown-preview-view .callout,
 .markdown-source-view.mod-cm6 .callout {
   margin-block: 1em;
@@ -419,11 +420,12 @@
   color: var(--tlt-callout-caution-accent);
 }
 
-/* 12. 表格：三线表；外层容器保留宽表横向滚动能力 */
+/* 10. 表格：三线表 */
 .markdown-preview-view .table-wrapper,
 .markdown-source-view.mod-cm6 .cm-table-widget {
   max-width: 100%;
   overflow-x: auto;
+  overscroll-behavior-inline: contain;
 }
 
 .markdown-preview-view table,
@@ -452,7 +454,7 @@
   border: 0;
 }
 
-/* 13. 图片与媒体 */
+/* 11. 图片与媒体 */
 .markdown-preview-view :is(img, video),
 .markdown-source-view.mod-cm6 :is(.image-embed img, .media-embed img, video) {
   display: block;
@@ -502,7 +504,7 @@
   justify-content: flex-end;
 }
 
-/* 14. 数学公式 */
+/* 12. 数学公式 */
 .markdown-preview-view :is(.math, mjx-container),
 .markdown-source-view.mod-cm6 :is(.math, mjx-container, .cm-math) {
   color: var(--tlt-text-color);
@@ -516,7 +518,7 @@
   overflow-y: hidden;
 }
 
-/* 15. 脚注 */
+/* 13. 脚注 */
 .markdown-preview-view :is(.footnote-ref, .footnote-backref) {
   color: inherit;
   background: transparent;
@@ -564,7 +566,7 @@
   font-size: 0.95em;
 }
 
-/* 16. Mermaid：只着色，不强制 SVG 尺寸 */
+/* 14. Mermaid */
 .markdown-preview-view .mermaid,
 .markdown-source-view.mod-cm6 .mermaid {
   box-sizing: border-box;
@@ -572,6 +574,7 @@
   margin-block: 1.5em;
   padding: 1em 1.2em;
   overflow-x: auto;
+  overscroll-behavior-inline: contain;
   color: var(--tlt-diagram-text-color);
   background: var(--tlt-diagram-background);
   border: 1px solid var(--tlt-diagram-border-color);
@@ -615,7 +618,7 @@
   stroke: var(--tlt-diagram-line-color);
 }
 
-/* 17. 分隔线 */
+/* 15. 分隔线 */
 .markdown-preview-view hr,
 .markdown-source-view.mod-cm6 .HyperMD-hr {
   margin-block: 1.8em;
@@ -623,7 +626,7 @@
   border-top: 1px solid var(--tlt-rule-color);
 }
 
-/* 18. 深色模式：变量仍只定义在 Markdown 内容根节点 */
+/* 16. 深色模式 */
 .theme-dark :is(
   .markdown-preview-view,
   .markdown-source-view.mod-cm6
@@ -656,19 +659,4 @@
   --tlt-diagram-note-fill: rgb(223 180 111 / 10%);
   --tlt-diagram-note-border: #c59c5d;
   --tlt-diagram-line-color: #b8b8b8;
-}
-
-/* 19. 可选功能与兼容性规则 */
-/*
- * Live Preview 标题编号默认关闭。
- * CodeMirror 6 会虚拟化并重绘行节点，纯 CSS counter 可能跳号或重置。
- * 如能接受该风险，可删除下方 @supports 外层注释标记后自行加入编号规则；
- * 本 snippet 不提供一个看似稳定但会误导用户的默认实现。
- */
-
-@supports (overflow: clip) {
-  .markdown-preview-view :is(.table-wrapper, .mermaid),
-  .markdown-source-view.mod-cm6 :is(.cm-table-widget, .mermaid) {
-    overscroll-behavior-inline: contain;
-  }
 }
