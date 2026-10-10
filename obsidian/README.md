@@ -2,7 +2,7 @@
 
 ## 功能说明
 
-`latex.css` 为 Obsidian Markdown 内容提供学术排版，包括标题层级、正文首行缩进、列表、引用、Callout、三线表、脚注、图片与图片对齐语法、公式及 Mermaid，并同时适配浅色和深色模式。阅读模式与 Live Preview 不显示标题编号；导出 PDF 时为 H2–H6 生成连续编号，H1 不编号，并在每个 H1 处重新计数。阅读模式正文默认缩进 `2em`；如需关闭，可将 CSS 内容区域局部变量 `--tlt-first-line-indent` 改为 `0`。
+`latex.css` 为 Obsidian Markdown 内容提供学术排版，包括标题层级、正文首行缩进、列表、引用、Callout、三线表、脚注、图片与图片对齐语法、公式及 Mermaid，并同时适配浅色和深色模式。启用 Tasks 插件时，查询结果末尾的源文件名会显示为文档图标，点击仍跳回原笔记。阅读模式与 Live Preview 不显示标题编号；导出 PDF 时为 H2–H6 生成连续编号，H1 不编号，并在每个 H1 处重新计数。阅读模式正文默认缩进 `2em`；如需关闭，可将 CSS 内容区域局部变量 `--tlt-first-line-indent` 改为 `0`。
 
 本 Snippet 不覆盖行内代码、围栏代码块、语法高亮或行号样式，这些内容完全使用 Obsidian 当前主题或相关插件的默认效果。
 
