@@ -6,6 +6,8 @@
 
 本 Snippet 不覆盖行内代码、围栏代码块、语法高亮或行号样式，这些内容完全使用 Obsidian 当前主题或相关插件的默认效果。
 
+普通引用与 Callout 统一使用四角 `6px` 圆角、左侧 `4px` 强调边、其余三边 `1px` 淡色描边和相同内边距，去除块内重复的引用竖线。普通引用使用中性灰底，Callout 按类型配色，图标与标题同色，标题保留原始大小写。阅读模式与 Live Preview 均适配浅深色；Live Preview 的连续引用行共用一个外框。可通过 `--tlt-block-radius`、`--tlt-block-accent-width`、`--tlt-block-padding-block` 和 `--tlt-block-padding-inline` 调整圆角、强调边宽度与留白。
+
 ## 安装方法
 
 将仓库中的 `obsidian/latex.css` 复制到 Obsidian Vault 的 `.obsidian/snippets/latex.css`。如果 `.obsidian/snippets/` 不存在，请先创建该目录。

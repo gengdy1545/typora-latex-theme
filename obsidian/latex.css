@@ -18,7 +18,13 @@
   --tlt-link-hover-color: #1f4fa8;
   --tlt-muted-color: #565d65;
   --tlt-rule-color: #dddddd;
-  --tlt-quote-border-color: hsl(0 0% 70%);
+  --tlt-block-radius: 6px;
+  --tlt-block-accent-width: 4px;
+  --tlt-block-padding-block: 0.8em;
+  --tlt-block-padding-inline: 1.2em;
+  --tlt-quote-border-color: rgb(86 93 101 / 18%);
+  --tlt-quote-accent: #9a9fa5;
+  --tlt-quote-background: rgb(86 93 101 / 4%);
   --tlt-table-border-color: #1a1a1a;
   --tlt-callout-note-accent: #2c5a85;
   --tlt-callout-note-background: rgb(24 58 99 / 6%);
@@ -356,101 +362,170 @@
   opacity: 1;
 }
 
-/* 8. 引用块 */
-.markdown-preview-view blockquote,
-.markdown-source-view.mod-cm6 .HyperMD-quote {
+/* 8. 引用块：阅读模式按块绘制，Live Preview 按连续引用行连接 */
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6) {
+  --blockquote-border-thickness: 0px;
+  --blockquote-color: var(--tlt-text-color);
+  --blockquote-background-color: var(--tlt-quote-background);
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6) blockquote,
+.markdown-source-view.mod-cm6.is-live-preview .cm-line.HyperMD-quote {
   color: var(--tlt-text-color);
-  font-size: 1.05em;
-  font-style: normal;
-  border-left: 4px solid var(--tlt-quote-border-color);
-}
-
-.markdown-preview-view blockquote {
-  margin-inline: 0;
-  padding-inline: calc(2em - 4px) 2em;
-}
-
-.markdown-preview-view blockquote blockquote {
-  padding-right: 0;
-  font-size: inherit;
-}
-
-.markdown-source-view.mod-cm6 .HyperMD-quote {
-  padding-inline-start: 1em;
-}
-
-/* 9. Callout */
-.markdown-preview-view .callout,
-.markdown-source-view.mod-cm6 .callout {
-  margin-block: 1em;
-  padding: 1em 1.2em 1em 1.35em;
-  color: var(--tlt-text-color);
-  background-color: var(--tlt-callout-note-background);
-  border: 0;
-  border-left: 3px solid var(--tlt-callout-note-accent);
-  border-radius: 0 4px 4px 0;
+  background: var(--tlt-quote-background);
+  border: 1px solid var(--tlt-quote-border-color);
+  border-left: var(--tlt-block-accent-width) solid var(--tlt-quote-accent);
+  border-radius: var(--tlt-block-radius);
+  box-shadow: none;
   font-size: 1em;
+  font-style: normal;
+  line-height: var(--tlt-base-line-height);
+  text-indent: 0;
 }
 
-.markdown-preview-view .callout-title,
-.markdown-source-view.mod-cm6 .callout-title {
-  color: var(--tlt-callout-note-accent);
-  font-size: 0.82em;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6) blockquote {
+  margin: 1em 0;
+  padding: var(--tlt-block-padding-block) var(--tlt-block-padding-inline);
+}
+
+/* 同时去掉主题的块内装饰线和编辑器的引用指示线。 */
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6) blockquote::before,
+.markdown-source-view.mod-cm6.is-live-preview .HyperMD-quote::before,
+.markdown-source-view.mod-cm6.is-live-preview .cm-blockquote-border::before {
+  display: none;
+}
+
+.markdown-source-view.mod-cm6.is-live-preview .cm-line.HyperMD-quote {
+  margin: 0;
+  padding: 0 var(--tlt-block-padding-inline);
+  border-block-width: 0;
+  border-radius: 0;
+}
+
+.markdown-source-view.mod-cm6.is-live-preview
+  .cm-line.HyperMD-quote:not(.HyperMD-quote + .HyperMD-quote) {
+  padding-block-start: var(--tlt-block-padding-block);
+  border-top-width: 1px;
+  border-start-start-radius: var(--tlt-block-radius);
+  border-start-end-radius: var(--tlt-block-radius);
+}
+
+.markdown-source-view.mod-cm6.is-live-preview
+  .cm-line.HyperMD-quote:not(:has(+ .HyperMD-quote)) {
+  padding-block-end: var(--tlt-block-padding-block);
+  border-bottom-width: 1px;
+  border-end-start-radius: var(--tlt-block-radius);
+  border-end-end-radius: var(--tlt-block-radius);
+}
+
+/* 9. Callout：共用轮廓，以标题和淡底色区分类型 */
+/* data-callout 提高优先级，覆盖 Cupertino 在 macOS 下的 border: none。 */
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6) .callout[data-callout] {
+  --tlt-callout-accent: var(--tlt-callout-note-accent);
+  --tlt-callout-background: var(--tlt-callout-note-background);
+  --callout-title-color: var(--tlt-callout-accent);
+  --callout-title-padding: 0;
+  --callout-title-weight: 600;
+  --callout-content-padding: 0;
+  --callout-content-background: transparent;
+  margin: 1em 0;
+  padding: var(--tlt-block-padding-block) var(--tlt-block-padding-inline);
+  color: var(--tlt-text-color);
+  background: var(--tlt-callout-background);
+  border: 1px solid color-mix(in srgb, var(--tlt-callout-accent) 22%, transparent);
+  border-left: var(--tlt-block-accent-width) solid var(--tlt-callout-accent);
+  border-radius: var(--tlt-block-radius);
+  box-shadow: none;
+  mix-blend-mode: normal;
+  font-size: 1em;
+  line-height: var(--tlt-base-line-height);
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .callout > .callout-title {
+  padding: 0;
+  gap: 0.5em;
+  color: var(--tlt-callout-accent);
+  font-size: 0.95em;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+  background: transparent;
+  border: 0;
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .callout > .callout-title > .callout-title-inner {
+  color: inherit;
+  font-weight: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .callout > .callout-title :is(.callout-icon, .callout-fold, .svg-icon) {
+  color: var(--tlt-callout-accent);
+}
+
+/* Cupertino 用 mask 绘制图标，并在 SVG 背景中读取此变量。 */
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .callout > .callout-title .callout-icon .svg-icon {
+  --callout-color: var(--tlt-callout-accent);
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .callout > .callout-content {
+  margin: 0;
+  padding: 0;
+  color: var(--tlt-text-color);
+  background: transparent;
+  border: 0;
+  text-indent: 0;
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .callout > .callout-content:not(:empty) {
+  margin-block-start: 0.65em;
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  :is(blockquote, .callout > .callout-content) > :first-child {
+  margin-block-start: 0;
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  :is(blockquote, .callout > .callout-content) > :last-child {
+  margin-block-end: 0;
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  :is(blockquote, .callout) p {
+  text-indent: 0;
 }
 
 :is(.markdown-preview-view, .markdown-source-view.mod-cm6)
   .callout[data-callout="tip"] {
-  background-color: var(--tlt-callout-tip-background);
-  border-left-color: var(--tlt-callout-tip-accent);
-}
-
-:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
-  .callout[data-callout="tip"] .callout-title {
-  color: var(--tlt-callout-tip-accent);
+  --tlt-callout-accent: var(--tlt-callout-tip-accent);
+  --tlt-callout-background: var(--tlt-callout-tip-background);
 }
 
 :is(.markdown-preview-view, .markdown-source-view.mod-cm6)
   .callout[data-callout="important"] {
-  background-color: var(--tlt-callout-important-background);
-  border-left-color: var(--tlt-callout-important-accent);
-}
-
-:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
-  .callout[data-callout="important"] .callout-title {
-  color: var(--tlt-callout-important-accent);
+  --tlt-callout-accent: var(--tlt-callout-important-accent);
+  --tlt-callout-background: var(--tlt-callout-important-background);
 }
 
 :is(.markdown-preview-view, .markdown-source-view.mod-cm6)
   .callout[data-callout="warning"] {
-  background-color: var(--tlt-callout-warning-background);
-  border-left-color: var(--tlt-callout-warning-accent);
+  --tlt-callout-accent: var(--tlt-callout-warning-accent);
+  --tlt-callout-background: var(--tlt-callout-warning-background);
 }
 
 :is(.markdown-preview-view, .markdown-source-view.mod-cm6)
-  .callout[data-callout="warning"] .callout-title {
-  color: var(--tlt-callout-warning-accent);
-}
-
-:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
-  .callout[data-callout="caution"],
-:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
-  .callout[data-callout="danger"],
-:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
-  .callout[data-callout="error"] {
-  background-color: var(--tlt-callout-caution-background);
-  border-left-color: var(--tlt-callout-caution-accent);
-}
-
-:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
-  :is(
-    .callout[data-callout="caution"],
-    .callout[data-callout="danger"],
-    .callout[data-callout="error"]
-  ) .callout-title {
-  color: var(--tlt-callout-caution-accent);
+  .callout:is([data-callout="caution"], [data-callout="danger"], [data-callout="error"]) {
+  --tlt-callout-accent: var(--tlt-callout-caution-accent);
+  --tlt-callout-background: var(--tlt-callout-caution-background);
 }
 
 /* 10. 表格：三线表 */
@@ -670,7 +745,9 @@
   --tlt-link-hover-color: #b4ccfa;
   --tlt-muted-color: #a7b0ba;
   --tlt-rule-color: #888888;
-  --tlt-quote-border-color: #888888;
+  --tlt-quote-border-color: rgb(167 176 186 / 22%);
+  --tlt-quote-accent: #888f98;
+  --tlt-quote-background: rgb(167 176 186 / 6%);
   --tlt-table-border-color: #d8d8d8;
   --tlt-callout-note-accent: #8bb1f9;
   --tlt-callout-note-background: rgb(139 177 249 / 10%);
