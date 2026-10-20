@@ -46,6 +46,11 @@
   --tlt-diagram-note-fill: rgb(140 103 49 / 10%);
   --tlt-diagram-note-border: #8c6731;
   --tlt-diagram-line-color: #545454;
+  --tlt-gantt-bar-0: #b9d6f2;
+  --tlt-gantt-bar-1: #e7d7b1;
+  --tlt-gantt-bar-2: #c5d5c3;
+  --tlt-gantt-bar-3: #d9cce4;
+  --tlt-gantt-today: #e03e3e;
 }
 
 /* 2. Markdown 内容容器 */
@@ -686,7 +691,7 @@
   color: var(--tlt-diagram-text-color);
   background: var(--tlt-diagram-background);
   border: 1px solid var(--tlt-diagram-border-color);
-  border-radius: 2px;
+  border-radius: var(--tlt-block-radius);
   text-align: center;
 }
 
@@ -724,6 +729,145 @@
     .loopLine
   ) {
   stroke: var(--tlt-diagram-line-color);
+}
+
+/* 甘特图只保留分组名和时间条。Mermaid 用图表 id 写样式，这里用 important 才能压过。 */
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6) {
+  /* 分组名右移假定锚点 x=10、leftPadding 75。裁掉的右侧空白假定 rightPadding 75，变了要改对应变量。 */
+  .mermaid:has(:is(.taskText, .taskTextOutsideLeft, .taskTextOutsideRight)) {
+    --tlt-gantt-label-shift: 55px;
+    --tlt-gantt-pad-left: 28px;
+    --tlt-gantt-pad-right: 20px;
+    --tlt-gantt-right-pad: 75px;
+    --tlt-gantt-board: calc(
+      100cqw + var(--tlt-gantt-pad-left) + var(--tlt-gantt-pad-right) + 2px
+    );
+    container-type: inline-size;
+    padding: 12px var(--tlt-gantt-pad-right) 0 var(--tlt-gantt-pad-left);
+    overflow: hidden;
+
+    svg {
+      display: block;
+      width: calc(
+        100cqw * (var(--tlt-gantt-board) / (var(--tlt-gantt-board) - var(--tlt-gantt-right-pad)))
+      ) !important;
+      max-width: none !important;
+      height: auto !important;
+      margin-top: -4px;
+      margin-bottom: -8px;
+      overflow: visible;
+    }
+
+    :is(
+      .sectionTitle,
+      .taskText,
+      .taskTextOutsideLeft,
+      .taskTextOutsideRight,
+      .grid .tick text
+    ) {
+      font-family: inherit !important;
+      font-weight: 400 !important;
+    }
+
+    .titleText {
+      fill: var(--tlt-diagram-text-color) !important;
+      font-family: inherit !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      text-anchor: middle !important;
+      transform: translateX(
+        calc(
+          (var(--tlt-gantt-right-pad) / -2) *
+            (100cqw / (var(--tlt-gantt-board) - var(--tlt-gantt-right-pad)))
+        )
+      ) !important;
+    }
+
+    .sectionTitle {
+      fill: var(--tlt-diagram-text-color) !important;
+      text-anchor: end !important;
+      transform: translateX(var(--tlt-gantt-label-shift)) !important;
+    }
+
+    .grid .tick line {
+      stroke: none !important;
+    }
+
+    .grid path.domain {
+      stroke: var(--tlt-rule-color) !important;
+      stroke-width: 1px !important;
+    }
+
+    .grid .tick text {
+      fill: var(--tlt-muted-color) !important;
+      stroke: none !important;
+      font-size: 11px !important;
+    }
+
+    /* 刻度由 Mermaid 按跨度生成，日期保持横向。不满 16 个全部保留；满 16 个藏偶数，满 18 个再藏 4n+3。 */
+    .grid:has(> g.tick:nth-child(16)) > g.tick:nth-of-type(even) text {
+      display: none;
+    }
+
+    .grid:has(> g.tick:nth-child(18)) > g.tick:nth-of-type(4n + 3) text {
+      display: none;
+    }
+
+    line.today {
+      stroke: var(--tlt-gantt-today) !important;
+      stroke-width: 1px !important;
+      opacity: 0.65;
+    }
+  }
+
+  .mermaid rect.section {
+    fill: none !important;
+    stroke: none !important;
+  }
+
+  .mermaid :is(
+    .task0, .task1, .task2, .task3,
+    .active0, .active1, .active2, .active3,
+    .done0, .done1, .done2, .done3,
+    .crit0, .crit1, .crit2, .crit3,
+    .activeCrit0, .activeCrit1, .activeCrit2, .activeCrit3,
+    .doneCrit0, .doneCrit1, .doneCrit2, .doneCrit3
+  ) {
+    stroke: none !important;
+    rx: 10px;
+    ry: 10px;
+  }
+
+  /* 色条按分组序号 0–3 循环，第 5 组回到第 1 色。组内任务是同一个类，颜色相同。 */
+  .mermaid :is(.task0, .active0, .done0, .crit0, .activeCrit0, .doneCrit0) {
+    fill: var(--tlt-gantt-bar-0) !important;
+  }
+
+  .mermaid :is(.task1, .active1, .done1, .crit1, .activeCrit1, .doneCrit1) {
+    fill: var(--tlt-gantt-bar-1) !important;
+  }
+
+  .mermaid :is(.task2, .active2, .done2, .crit2, .activeCrit2, .doneCrit2) {
+    fill: var(--tlt-gantt-bar-2) !important;
+  }
+
+  .mermaid :is(.task3, .active3, .done3, .crit3, .activeCrit3, .doneCrit3) {
+    fill: var(--tlt-gantt-bar-3) !important;
+  }
+
+  .mermaid :is(
+    .taskText, .taskText0, .taskText1, .taskText2, .taskText3,
+    .activeText0, .activeText1, .activeText2, .activeText3,
+    .doneText0, .doneText1, .doneText2, .doneText3,
+    .critText0, .critText1, .critText2, .critText3,
+    .activeCritText0, .activeCritText1, .activeCritText2, .activeCritText3,
+    .doneCritText0, .doneCritText1, .doneCritText2, .doneCritText3,
+    .taskTextOutsideLeft, .taskTextOutsideRight
+  ) {
+    fill: var(--tlt-diagram-text-color) !important;
+    stroke: none !important;
+    text-decoration: none !important;
+  }
 }
 
 /* 15. 分隔线 */
@@ -769,4 +913,9 @@
   --tlt-diagram-note-fill: rgb(223 180 111 / 10%);
   --tlt-diagram-note-border: #c59c5d;
   --tlt-diagram-line-color: #b8b8b8;
+  --tlt-gantt-bar-0: rgb(139 177 249 / 28%);
+  --tlt-gantt-bar-1: rgb(223 180 111 / 28%);
+  --tlt-gantt-bar-2: rgb(154 203 145 / 28%);
+  --tlt-gantt-bar-3: rgb(198 164 226 / 28%);
+  --tlt-gantt-today: #ee8b8b;
 }
