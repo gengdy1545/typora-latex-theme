@@ -733,28 +733,24 @@
 
 /* 甘特图只保留分组名和时间条。Mermaid 用图表 id 写样式，这里用 important 才能压过。 */
 :is(.markdown-preview-view, .markdown-source-view.mod-cm6) {
-  /* 分组名右移假定锚点 x=10、leftPadding 75。裁掉的右侧空白假定 rightPadding 75，变了要改对应变量。 */
+  /* viewBox 右侧 75px 拉出卡片后裁掉。高度必须跟着 viewBox 变，否则内容会居中，裁切落在空白上。 */
   .mermaid:has(:is(.taskText, .taskTextOutsideLeft, .taskTextOutsideRight)) {
-    --tlt-gantt-label-shift: 55px;
-    --tlt-gantt-pad-left: 28px;
-    --tlt-gantt-pad-right: 20px;
-    --tlt-gantt-right-pad: 75px;
-    --tlt-gantt-board: calc(
-      100cqw + var(--tlt-gantt-pad-left) + var(--tlt-gantt-pad-right) + 2px
-    );
-    container-type: inline-size;
-    padding: 12px var(--tlt-gantt-pad-right) 0 var(--tlt-gantt-pad-left);
+    --tlt-gantt-pad: 75px;
+    --tlt-gantt-inset: 12px;
+    --tlt-gantt-label-shift: calc(var(--tlt-gantt-pad) - 10px - 8px);
+    /* 标题上移 10px，上内边距跟着加大，避免贴边被裁。底部多裁，吃掉时间轴下的固定留白。 */
+    padding: 18px var(--tlt-gantt-inset) 0 20px;
     overflow: hidden;
+    text-align: start;
 
     svg {
       display: block;
-      width: calc(
-        100cqw * (var(--tlt-gantt-board) / (var(--tlt-gantt-board) - var(--tlt-gantt-right-pad)))
-      ) !important;
-      max-width: none !important;
+      width: calc(100% + var(--tlt-gantt-pad)) !important;
       height: auto !important;
-      margin-top: -4px;
-      margin-bottom: -8px;
+      max-width: none !important;
+      max-height: none !important;
+      margin-top: 0;
+      margin-bottom: -16px;
       overflow: visible;
     }
 
@@ -775,16 +771,12 @@
       font-size: 14px !important;
       font-weight: 500 !important;
       text-anchor: middle !important;
-      transform: translateX(
-        calc(
-          (var(--tlt-gantt-right-pad) / -2) *
-            (100cqw / (var(--tlt-gantt-board) - var(--tlt-gantt-right-pad)))
-        )
-      ) !important;
+      transform: translate(calc(var(--tlt-gantt-pad) / -2), -10px) !important;
     }
 
     .sectionTitle {
       fill: var(--tlt-diagram-text-color) !important;
+      font-size: 11px !important;
       text-anchor: end !important;
       transform: translateX(var(--tlt-gantt-label-shift)) !important;
     }
@@ -918,4 +910,22 @@
   --tlt-gantt-bar-2: rgb(154 203 145 / 28%);
   --tlt-gantt-bar-3: rgb(198 164 226 / 28%);
   --tlt-gantt-today: #ee8b8b;
+}
+
+/* 17. roadmap 文档嵌入：去掉标题、底色、起始边和内边距 */
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .internal-embed[src="roadmap"] {
+  --embed-background: transparent;
+  --embed-border-top: none;
+  --embed-border-end: none;
+  --embed-border-bottom: none;
+  --embed-border-start: none;
+  --embed-padding: 0;
+  --embed-max-height: none;
+}
+
+:is(.markdown-preview-view, .markdown-source-view.mod-cm6)
+  .internal-embed[src="roadmap"]
+  :is(.embed-title, .markdown-embed-link) {
+  display: none;
 }
