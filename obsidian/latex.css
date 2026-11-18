@@ -1,6 +1,6 @@
 /*
  * Obsidian Markdown 学术排版。
- * 只作用于阅读模式与 Live Preview 的内容，不改工作区背景和界面。
+ * 作用于阅读模式与 Live Preview 的内容，以及脚注悬浮预览。
  * 标题编号仅在导出时生成。
  */
 
@@ -290,7 +290,6 @@
 /* 7. 列表与任务列表 */
 .markdown-preview-view :is(ul, ol) {
   margin-block: 0;
-  padding-inline-start: 2em;
 }
 
 .markdown-preview-view ul {
@@ -306,6 +305,7 @@
 }
 
 .markdown-preview-view ol {
+  padding-inline-start: 2em;
   list-style-type: decimal;
 }
 
@@ -632,6 +632,18 @@
 }
 
 /* 13. 脚注 */
+/* Cupertino 给悬浮预览使用半透明菜单背景，脚注卡片改用正文背景。 */
+.popover.hover-popover:has(> .markdown-embed[data-type="footnote"]) {
+  background-color: var(--background-primary);
+  backdrop-filter: none;
+}
+
+.popover.hover-popover > .markdown-embed[data-type="footnote"]
+  .markdown-preview-view p {
+  text-align: start;
+  text-indent: 0;
+}
+
 .markdown-preview-view :is(.footnote-ref, .footnote-backref) {
   color: inherit;
   background: transparent;

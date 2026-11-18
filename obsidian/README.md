@@ -37,7 +37,7 @@
 
 ## 样式范围
 
-样式仅限定于 `.markdown-preview-view` 和 `.markdown-source-view.mod-cm6` 内的 Markdown 内容，不设置工作区背景，不作用于 Canvas、Excalidraw 或其他非 Markdown 视图，也不修改 YAML Frontmatter。
+样式作用于 `.markdown-preview-view` 和 `.markdown-source-view.mod-cm6` 内的 Markdown 内容。脚注悬浮卡片使用当前主题的正文背景色，段落左对齐，首行不缩进。工作区背景、Canvas、Excalidraw、其他非 Markdown 视图和 YAML Frontmatter 继续使用原有样式。
 
 ## 验证方法
 
